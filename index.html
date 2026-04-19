@@ -629,7 +629,18 @@ const navMap = [
   ['contact', 4]
 ];
 const setActiveNav = idx => navBtns.forEach((b, i) => b.classList.toggle('active', i === idx));
-if (navBtns.length) setActiveNav(0);
+const setInitialActiveNav = () => {
+  const pivot = window.innerHeight * 0.35;
+  let best = { idx: 0, dist: Infinity };
+  navMap.forEach(([id, idx]) => {
+    const section = document.getElementById(id);
+    if (!section) return;
+    const dist = Math.abs(section.getBoundingClientRect().top - pivot);
+    if (dist < best.dist) best = { idx, dist };
+  });
+  setActiveNav(best.idx);
+};
+if (navBtns.length) setInitialActiveNav();
 const secObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
