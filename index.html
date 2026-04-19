@@ -582,7 +582,7 @@ footer span{color:var(--mint);}
       <div class="open-work-card">
         <div class="ow-head">
           <div class="ow-profile">
-            <img class="ow-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Crect width='80' height='80' fill='%23e9f5ef'/%3E%3Ccircle cx='40' cy='30' r='14' fill='%2398b8a8'/%3E%3Cpath d='M14 70c5-13 18-21 26-21s21 8 26 21' fill='%2398b8a8'/%3E%3C/svg%3E" alt="Profile avatar">
+            <img class="ow-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Crect width='80' height='80' fill='%23e9f5ef'/%3E%3Ccircle cx='40' cy='30' r='14' fill='%2398b8a8'/%3E%3Cpath d='M14 70c5-13 18-21 26-21s21 8 26 21' fill='%2398b8a8'/%3E%3C/svg%3E" alt="">
             <div>
               <h3 class="ow-title">B. Sai Teja</h3>
               <p class="ow-role">MBA Agribusiness Candidate · PJTSAU</p>
@@ -671,7 +671,15 @@ navMap.forEach(([id]) => {
 // REUSE PROFILE PHOTO IN OPEN-TO-WORK CARD
 const heroAvatar = document.querySelector('.profile-img');
 const openWorkAvatar = document.querySelector('.ow-avatar');
-if (heroAvatar && openWorkAvatar) openWorkAvatar.src = heroAvatar.src;
+if (heroAvatar && openWorkAvatar) {
+  if (heroAvatar.complete && heroAvatar.naturalWidth > 0) {
+    openWorkAvatar.src = heroAvatar.src;
+  } else {
+    heroAvatar.addEventListener('load', () => {
+      openWorkAvatar.src = heroAvatar.src;
+    }, { once: true });
+  }
+}
 </script>
 </body>
 </html>
