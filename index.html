@@ -904,7 +904,7 @@
   <div class="hero-left">
     <div class="hero-particles" id="particles"></div>
     <div class="hero-tag">Available for Full-Time Roles</div>
-    <h1 class="hero-name glitch" data-text="B. Sai">B. Sai<br><span>Teja</span></h1>
+    <h1 class="hero-name glitch" data-text="B. Sai Teja">B. Sai<br><span>Teja</span></h1>
     <p class="hero-title">Agribusiness · Agri-Tech · Digital Marketing</p>
     <p class="hero-desc">MBA candidate bridging deep agricultural field knowledge with modern digital and business development skills. Currently building millet value chains at ICAR-IIMR.</p>
     <div class="hero-cta">
@@ -916,7 +916,7 @@
     <div class="hero-visual" id="hero-visual">
       <div class="avatar-ring">ST</div>
       <div class="stat-grid">
-        <div class="stat-card"><div class="stat-num count-num" data-target="8.24" data-decimal="2">0</div><div class="stat-label">BSc CGPA</div></div>
+        <div class="stat-card"><div class="stat-num count-num" data-target="8.24" data-start="8.00" data-decimal="2">8.00</div><div class="stat-label">BSc CGPA</div></div>
         <div class="stat-card"><div class="stat-num count-num" data-target="3" data-suffix="+">0</div><div class="stat-label">Internships</div></div>
         <div class="stat-card"><div class="stat-num count-num" data-target="5" data-suffix="mo">0</div><div class="stat-label">Field Work</div></div>
         <div class="stat-card"><div class="stat-num">'26</div><div class="stat-label">MBA Grad</div></div>
@@ -1067,9 +1067,9 @@
       <h2 class="contact-big">Open to the<br><span>right role.</span></h2>
       <p class="contact-sub">Looking for full-time opportunities in Agri-input, Agri-tech, or Agribusiness Development companies. MBA graduating 2026.</p>
       <div class="contact-links">
-        <div class="contact-item"><div class="contact-icon">📧</div><span>sai@gmail.com</span></div>
-        <div class="contact-item"><div class="contact-icon">📱</div><span>+91 836 752 9281</span></div>
-        <div class="contact-item"><div class="contact-icon">🔗</div><span>linkedin.com/in/saitejabaddula</span></div>
+        <div class="contact-item"><div class="contact-icon">📧</div><a href="mailto:8367529281sai@gmail.com" style="color:inherit;text-decoration:none;">8367529281sai@gmail.com</a></div>
+        <div class="contact-item"><div class="contact-icon">📱</div><span>+91 83675 29281</span></div>
+        <div class="contact-item"><div class="contact-icon">🔗</div><a href="https://www.linkedin.com/in/saitejabaddula" style="color:inherit;text-decoration:none;">linkedin.com/in/saitejabaddula</a></div>
         <div class="contact-item"><div class="contact-icon">📍</div><span>Hyderabad, Telangana</span></div>
       </div>
     </div>
@@ -1161,14 +1161,17 @@ tlObserver.observe(document.getElementById('timeline'));
 function animateCounters() {
   document.querySelectorAll('.count-num[data-target]').forEach(el => {
     const target = parseFloat(el.dataset.target);
+    const startVal = parseFloat(el.dataset.start || '0');
     const dec = parseInt(el.dataset.decimal || '0');
     const suffix = el.dataset.suffix || '';
-    let start = 0;
-    const step = target / 60;
+    let current = startVal;
+    const range = target - startVal;
+    const steps = 60;
+    const step = range / steps;
     const interval = setInterval(() => {
-      start += step;
-      if (start >= target) { start = target; clearInterval(interval); }
-      el.textContent = start.toFixed(dec) + suffix;
+      current += step;
+      if (current >= target) { current = target; clearInterval(interval); }
+      el.textContent = current.toFixed(dec) + suffix;
     }, 25);
   });
 }
