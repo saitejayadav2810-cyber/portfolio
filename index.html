@@ -3,428 +3,327 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>B. Sai Teja — Agribusiness &amp; Digital Strategy</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<title>B. Sai Teja — Agribusiness & Digital Strategy</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-:root {
-  --forest:   #1E4D38;
-  --sage:     #3A7D5B;
-  --mint:     #5CAF82;
-  --pale:     #E8F5EE;
-  --parchment:#F6F1EA;
-  --ink:      #141414;
-  --slate:    #4A4A4A;
-  --mist:     #8A8A8A;
-  --bone:     #EDE8DF;
-  --accent:   #C8873A;
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --forest:#1B4332;
+  --sage:#2D6A4F;
+  --mint:#52B788;
+  --pale:#D8F3DC;
+  --parchment:#F8F4EF;
+  --ink:#0F1A0F;
+  --slate:#3D4A3E;
+  --mist:#7A8C7B;
+  --bone:#EDE8DF;
+  --amber:#D4A017;
+  --warm:#F0EBE1;
 }
-html { scroll-behavior: smooth; }
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--parchment);
-  color: var(--ink);
-  overflow-x: hidden;
-  cursor: none;
-}
+html{scroll-behavior:smooth;}
+body{font-family:'Outfit',sans-serif;background:var(--parchment);color:var(--ink);overflow-x:hidden;}
 
-/* CURSOR */
-#cur {
-  width: 8px; height: 8px;
-  background: var(--forest); border-radius: 50%;
-  position: fixed; top:0; left:0;
-  pointer-events: none; z-index:9999;
-  transform: translate(-50%,-50%);
-  transition: width .2s, height .2s, background .2s;
-  will-change: transform;
+/* ── LOADER ── */
+#loader{
+  position:fixed;inset:0;background:var(--forest);z-index:9999;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;
+  transition:opacity .8s ease,visibility .8s;
 }
-#cur-r {
-  width: 36px; height: 36px;
-  border: 1px solid var(--sage); border-radius: 50%;
-  position: fixed; top:0; left:0;
-  pointer-events: none; z-index:9998;
-  transform: translate(-50%,-50%);
-  opacity: .45; will-change: transform;
-  transition: width .3s, height .3s, border-color .25s;
+#loader.out{opacity:0;visibility:hidden;}
+.l-name{
+  font-family:'Playfair Display',serif;font-size:clamp(36px,8vw,64px);
+  font-weight:700;color:#fff;letter-spacing:.04em;overflow:hidden;
 }
-body.hov #cur  { width:18px; height:18px; background: var(--mint); }
-body.hov #cur-r{ width:54px; height:54px; border-color: var(--mint); opacity:.25; }
-@media(max-width:700px){#cur,#cur-r{display:none}body{cursor:auto}}
+.l-name span{display:inline-block;animation:rise .7s cubic-bezier(.22,1,.36,1) both;}
+.l-sub{font-size:clamp(10px,2vw,12px);letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,.4);}
+.l-bar{width:120px;height:1px;background:rgba(255,255,255,.15);overflow:hidden;}
+.l-fill{height:100%;background:var(--mint);animation:lfill 2s ease forwards;}
+@keyframes rise{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes lfill{from{width:0}to{width:100%}}
 
-/* SCROLL PROGRESS */
-#sp {
-  position:fixed; top:0; left:0; height:2px;
-  background: linear-gradient(90deg, var(--mint), var(--accent));
-  z-index:1000; width:0%; transition: width .08s linear;
-}
+/* ── SCROLL BAR ── */
+#sp{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--mint),var(--amber));z-index:1000;width:0;transition:width .05s linear;}
 
-/* THREE BG */
-#bg { position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.12; }
-
-/* LOADER */
-#loader {
-  position:fixed; inset:0; background: var(--forest);
-  z-index:10000; display:flex; flex-direction:column;
-  align-items:center; justify-content:center;
-  transition: opacity 1s cubic-bezier(.4,0,.2,1), visibility 1s;
+/* ── NAV ── */
+.nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(248,244,239,.93);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(0,0,0,.07);
+  padding:0 clamp(20px,5vw,60px);display:flex;align-items:center;gap:clamp(16px,3vw,36px);height:58px;
+  transition:box-shadow .3s;
 }
-#loader.out { opacity:0; visibility:hidden; }
-.l-name {
-  font-family:'Playfair Display',serif;
-  font-size:52px; font-weight:600; color:#fff;
-  letter-spacing:.04em; overflow:hidden;
+.nav.on{box-shadow:0 4px 24px rgba(27,67,50,.08);}
+.nav-logo{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(20px,4vw,24px);color:var(--forest);margin-right:auto;letter-spacing:.04em;}
+.nl{
+  font-size:clamp(12px,2vw,13.5px);color:var(--slate);letter-spacing:.02em;
+  text-decoration:none;background:none;border:none;font-family:'Outfit',sans-serif;
+  cursor:pointer;padding:4px 0;position:relative;transition:color .2s;
 }
-.l-name span { display:inline-block; animation: rise .7s cubic-bezier(.22,1,.36,1) both; }
-@keyframes rise { from{transform:translateY(110%);opacity:0} to{transform:translateY(0);opacity:1} }
-.l-track { width:160px; height:1px; background:rgba(255,255,255,.15); margin-top:22px; overflow:hidden; border-radius:1px; }
-.l-fill  { height:100%; background:var(--mint); animation: lfill 2s cubic-bezier(.4,0,.2,1) forwards; }
-@keyframes lfill { from{width:0} to{width:100%} }
-.l-sub {
-  font-size:10.5px; letter-spacing:3px; text-transform:uppercase;
-  color:rgba(255,255,255,.4); margin-top:14px;
-  animation: rise .7s .9s cubic-bezier(.22,1,.36,1) both;
-}
-
-/* PAGE WRAP */
-.page { position:relative; z-index:1; }
-
-/* HERO */
-.hero {
-  min-height:100vh; display:grid; grid-template-columns:55% 45%;
-  position:relative; overflow:hidden;
-}
-.hero-l {
-  background:var(--forest); padding:90px 64px;
-  display:flex; flex-direction:column; justify-content:center;
-  position:relative;
-  clip-path:polygon(0 0,100% 0,92% 100%,0 100%); z-index:2;
-}
-.hparts { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
-.hp {
-  position:absolute; background:rgba(255,255,255,.18);
-  border-radius:50%; animation:drift linear infinite;
-}
-@keyframes drift {
-  0%  {transform:translateY(100vh) scale(0);opacity:0}
-  8%  {opacity:1}
-  92% {opacity:.6}
-  100%{transform:translateY(-40px) scale(1.4);opacity:0}
-}
-.hero-badge {
-  display:inline-flex; align-items:center; gap:7px;
-  background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2);
-  color:rgba(255,255,255,.85); font-size:10.5px; letter-spacing:2.5px;
-  text-transform:uppercase; padding:7px 16px; border-radius:40px;
-  margin-bottom:32px; width:fit-content;
-  animation:up .9s 2.1s cubic-bezier(.22,1,.36,1) both;
-}
-.bdot { width:6px;height:6px;background:var(--mint);border-radius:50%;animation:blink 1.8s ease-in-out infinite; }
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
-.hero-name {
-  font-family:'Playfair Display',serif;
-  font-size:clamp(52px,5.5vw,84px); font-weight:700;
-  color:#fff; line-height:1.0; margin-bottom:12px;
-  letter-spacing:-.01em; white-space:nowrap;
-  animation:up .9s 2.2s cubic-bezier(.22,1,.36,1) both;
-}
-.hero-title {
-  font-size:11.5px; letter-spacing:3px; text-transform:uppercase;
-  color:rgba(255,255,255,.5); margin-bottom:28px;
-  animation:up .9s 2.3s cubic-bezier(.22,1,.36,1) both;
-}
-.hero-rule {
-  width:44px; height:1px; background:var(--mint); margin-bottom:26px;
-  animation:up .9s 2.35s cubic-bezier(.22,1,.36,1) both;
-}
-.hero-desc {
-  font-size:15px; line-height:1.88; color:rgba(255,255,255,.72);
-  max-width:360px; margin-bottom:48px; font-weight:300;
-  animation:up .9s 2.4s cubic-bezier(.22,1,.36,1) both;
-}
-.hero-cta { display:flex; gap:14px; flex-wrap:wrap; animation:up .9s 2.5s cubic-bezier(.22,1,.36,1) both; }
-@keyframes up { from{opacity:0;transform:translateY(26px)} to{opacity:1;transform:translateY(0)} }
-
-.btn-p {
-  background:#fff; color:var(--forest); border:none;
-  padding:13px 28px; font-family:'DM Sans',sans-serif;
-  font-size:13px; font-weight:600; border-radius:3px; cursor:none;
-  letter-spacing:.04em;
-  transition:transform .38s cubic-bezier(.22,1,.36,1),box-shadow .38s;
-}
-.btn-p:hover{transform:translateY(-4px);box-shadow:0 18px 42px rgba(0,0,0,.18);}
-.btn-o {
-  background:transparent; color:#fff;
-  border:1px solid rgba(255,255,255,.3); padding:13px 28px;
-  font-family:'DM Sans',sans-serif; font-size:13px; font-weight:400;
-  border-radius:3px; cursor:none; letter-spacing:.04em;
-  transition:border-color .3s,background .3s,transform .38s cubic-bezier(.22,1,.36,1);
-}
-.btn-o:hover{border-color:rgba(255,255,255,.65);background:rgba(255,255,255,.07);transform:translateY(-4px);}
-
-/* HERO RIGHT */
-.hero-r {
-  background:var(--parchment);
-  display:flex; align-items:center; justify-content:center;
-  padding:80px 56px 80px 80px; perspective:1200px;
-  animation:up 1s 2.6s cubic-bezier(.22,1,.36,1) both;
-}
-.hero-card { width:100%; max-width:330px; transform-style:preserve-3d; transition:transform .12s ease-out; }
-.avatar {
-  width:128px; height:128px; border-radius:50%;
-  background:var(--pale); border:2px solid var(--mint);
-  display:flex; align-items:center; justify-content:center;
-  margin:0 auto 30px;
-  font-family:'Playfair Display',serif; font-size:40px; font-weight:600; color:var(--forest);
-  animation:halo 3.5s ease-in-out infinite;
-}
-@keyframes halo{
-  0%,100%{box-shadow:0 0 0 6px rgba(92,175,130,.12),0 16px 48px rgba(30,77,56,.12)}
-  50%{box-shadow:0 0 0 14px rgba(92,175,130,.06),0 24px 56px rgba(30,77,56,.2)}
-}
-.stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.stat {
-  background:#fff; border:1px solid var(--bone); border-radius:10px; padding:18px 14px;
-  text-align:center; transition:transform .42s cubic-bezier(.22,1,.36,1),box-shadow .42s;
-}
-.stat:hover{transform:translateY(-5px) rotateX(4deg);box-shadow:0 18px 40px rgba(30,77,56,.1);}
-.stat-n { font-family:'Playfair Display',serif; font-size:30px; font-weight:700; color:var(--forest); line-height:1; margin-bottom:5px; }
-.stat-l { font-size:10px; color:var(--mist); text-transform:uppercase; letter-spacing:1.2px; }
-
-/* NAV */
-.nav {
-  position:sticky; top:0; z-index:100;
-  background:rgba(246,241,234,.94); backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px);
-  border-bottom:1px solid rgba(0,0,0,.06);
-  padding:0 60px; display:flex; align-items:center; gap:36px; height:56px;
-  transition:box-shadow .4s;
-}
-.nav.on{box-shadow:0 6px 32px rgba(30,77,56,.07);}
-.nav-logo{font-family:'Playfair Display',serif;font-weight:700;font-size:20px;color:var(--forest);margin-right:auto;}
-.nl {
-  font-size:12.5px; color:var(--slate); letter-spacing:.02em;
-  text-decoration:none; cursor:none; background:none; border:none;
-  font-family:'DM Sans',sans-serif; transition:color .2s;
-  position:relative; padding-bottom:2px;
-}
-.nl::after{
-  content:''; position:absolute; bottom:0; left:0; right:0; height:1px;
-  background:var(--sage); transform:scaleX(0);
-  transition:transform .28s cubic-bezier(.22,1,.36,1); transform-origin:right;
-}
+.nl::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1.5px;background:var(--mint);transform:scaleX(0);transition:transform .25s cubic-bezier(.22,1,.36,1);transform-origin:right;}
 .nl:hover{color:var(--forest);}
 .nl:hover::after{transform:scaleX(1);transform-origin:left;}
 
-/* SECTIONS */
-section{padding:96px 60px;}
-.s-label{font-size:10.5px;letter-spacing:3px;text-transform:uppercase;color:var(--mint);margin-bottom:10px;font-weight:500;}
-.s-title{font-family:'Playfair Display',serif;font-size:clamp(34px,3vw,50px);font-weight:700;color:var(--ink);margin-bottom:54px;line-height:1.15;}
+/* ── HERO ── */
+.hero{
+  min-height:100svh;display:grid;grid-template-columns:1fr;
+  background:var(--forest);position:relative;overflow:hidden;
+}
+.hero-inner{
+  display:grid;grid-template-columns:52% 48%;
+  min-height:100svh;position:relative;z-index:2;
+}
+.hero-bg{position:absolute;inset:0;z-index:1;overflow:hidden;}
+.hb-circle{position:absolute;border-radius:50%;background:rgba(255,255,255,.04);animation:hbpulse ease-in-out infinite;}
+@keyframes hbpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
 
-/* REVEAL */
-.rv,.rvl,.rvr{opacity:0;will-change:transform,opacity;transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1);}
-.rv {transform:translateY(34px);}
-.rvl{transform:translateX(-42px);}
-.rvr{transform:translateX(42px);}
+.hero-l{
+  padding:clamp(48px,8vh,100px) clamp(24px,5vw,64px);
+  display:flex;flex-direction:column;justify-content:center;
+  position:relative;z-index:3;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18);
+  color:rgba(255,255,255,.8);font-size:clamp(9px,1.5vw,11px);letter-spacing:2.5px;
+  text-transform:uppercase;padding:8px 18px;border-radius:50px;
+  margin-bottom:clamp(20px,4vh,36px);width:fit-content;
+  animation:fadeUp .8s 2.1s both;
+}
+.bdot{width:7px;height:7px;background:var(--mint);border-radius:50%;animation:blink 2s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.1}}
+
+.hero-name{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(52px,7.5vw,96px);font-weight:900;
+  color:#fff;line-height:1;margin-bottom:14px;
+  letter-spacing:-.01em;white-space:nowrap;
+  animation:fadeUp .9s 2.2s both;
+}
+
+.hero-tag{
+  font-size:clamp(11px,1.8vw,13px);letter-spacing:3px;text-transform:uppercase;
+  color:rgba(255,255,255,.45);margin-bottom:clamp(20px,3vh,28px);
+  animation:fadeUp .9s 2.3s both;
+}
+.hero-rule{width:40px;height:1.5px;background:var(--mint);margin-bottom:clamp(18px,3vh,26px);animation:fadeUp .9s 2.35s both;}
+.hero-desc{
+  font-size:clamp(15px,2.2vw,16.5px);line-height:1.9;color:rgba(255,255,255,.68);
+  max-width:420px;margin-bottom:clamp(36px,5vh,52px);font-weight:300;
+  animation:fadeUp .9s 2.4s both;
+}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;animation:fadeUp .9s 2.5s both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+.btn-p{
+  background:#fff;color:var(--forest);border:none;
+  padding:clamp(12px,2vh,15px) clamp(22px,3vw,30px);
+  font-family:'Outfit',sans-serif;font-size:clamp(13px,1.8vw,14px);font-weight:600;
+  border-radius:4px;cursor:pointer;letter-spacing:.04em;
+  transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s;
+}
+.btn-p:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.22);}
+.btn-o{
+  background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.3);
+  padding:clamp(12px,2vh,15px) clamp(22px,3vw,30px);
+  font-family:'Outfit',sans-serif;font-size:clamp(13px,1.8vw,14px);font-weight:400;
+  border-radius:4px;cursor:pointer;letter-spacing:.04em;
+  transition:all .3s;
+}
+.btn-o:hover{border-color:rgba(255,255,255,.7);background:rgba(255,255,255,.08);transform:translateY(-4px);}
+
+/* HERO RIGHT — Cards */
+.hero-r{
+  display:flex;align-items:center;justify-content:center;
+  padding:clamp(40px,6vh,80px) clamp(20px,4vw,48px) clamp(40px,6vh,80px) clamp(24px,4vw,56px);
+  animation:fadeUp 1s 2.6s both;
+}
+.hero-cards{width:100%;max-width:360px;display:flex;flex-direction:column;gap:16px;}
+
+.info-card{
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);
+  border-radius:16px;padding:20px 22px;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  transition:transform .4s cubic-bezier(.22,1,.36,1),background .3s,box-shadow .4s;
+  position:relative;overflow:hidden;
+}
+.info-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(82,183,136,.08),transparent);opacity:0;transition:opacity .3s;}
+.info-card:hover{transform:translateY(-5px) translateX(3px);background:rgba(255,255,255,.11);box-shadow:0 20px 50px rgba(0,0,0,.25);}
+.info-card:hover::before{opacity:1;}
+
+.card-icon{font-size:26px;margin-bottom:10px;display:block;}
+.card-title{font-family:'Playfair Display',serif;font-size:clamp(18px,2.8vw,22px);font-weight:600;color:#fff;margin-bottom:4px;line-height:1.2;}
+.card-sub{font-size:clamp(11px,1.6vw,12.5px);color:rgba(255,255,255,.5);letter-spacing:.5px;line-height:1.5;}
+.card-accent{color:var(--mint);font-weight:500;}
+
+.card-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.info-card.sm{padding:16px 18px;}
+.info-card.sm .card-title{font-size:clamp(16px,2.4vw,18px);}
+
+/* ── SECTIONS ── */
+section{padding:clamp(56px,8vh,96px) clamp(20px,6vw,64px);}
+.s-label{font-size:clamp(10px,1.5vw,11px);letter-spacing:3.5px;text-transform:uppercase;color:var(--mint);margin-bottom:10px;font-weight:600;}
+.s-title{font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,56px);font-weight:700;color:var(--ink);margin-bottom:clamp(36px,5vh,56px);line-height:1.1;}
+
+/* ── REVEAL ── */
+.rv,.rvl,.rvr{opacity:0;transition:opacity .85s cubic-bezier(.22,1,.36,1),transform .85s cubic-bezier(.22,1,.36,1);}
+.rv{transform:translateY(30px);}
+.rvl{transform:translateX(-36px);}
+.rvr{transform:translateX(36px);}
 .rv.on,.rvl.on,.rvr.on{opacity:1;transform:none;}
-.d1{transition-delay:.08s!important}
-.d2{transition-delay:.16s!important}
-.d3{transition-delay:.24s!important}
-.d4{transition-delay:.32s!important}
+.d1{transition-delay:.06s!important}
+.d2{transition-delay:.12s!important}
+.d3{transition-delay:.18s!important}
+.d4{transition-delay:.24s!important}
+.d5{transition-delay:.30s!important}
 
-/* ABOUT */
-.about-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:64px;align-items:start;}
-.about-text p{font-size:15.5px;color:var(--slate);line-height:1.9;margin-bottom:20px;font-weight:300;}
-.about-text strong{color:var(--ink);font-weight:500;}
-.sk-head{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--mist);margin-bottom:13px;}
-.pills{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:24px;}
+/* ── ABOUT ── */
+.about-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(32px,5vw,64px);align-items:start;}
+.about-text p{font-size:clamp(14.5px,2vw,16px);color:var(--slate);line-height:1.9;margin-bottom:18px;font-weight:300;}
+.about-text strong{color:var(--ink);font-weight:600;}
+.sk-head{font-size:clamp(9.5px,1.4vw,11px);text-transform:uppercase;letter-spacing:2.5px;color:var(--mist);margin-bottom:12px;font-weight:500;}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;}
 .pill{
-  background:var(--pale);color:var(--forest);font-size:12px;padding:5px 13px;
-  border-radius:3px;font-weight:500;border:1px solid rgba(92,175,130,.25);
-  transition:transform .28s cubic-bezier(.22,1,.36,1),box-shadow .28s;cursor:default;
+  background:var(--pale);color:var(--forest);font-size:clamp(11.5px,1.6vw,12.5px);
+  padding:6px 14px;border-radius:4px;font-weight:500;
+  border:1px solid rgba(82,183,136,.28);
+  transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s;cursor:default;
 }
-.pill:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(30,77,56,.12);}
-.pill.e{background:#F5EDE3;color:var(--accent);border-color:rgba(200,135,58,.22);}
-.pill.e:hover{box-shadow:0 8px 20px rgba(200,135,58,.12);}
+.pill:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(27,67,50,.13);}
+.pill.e{background:#FAF0E4;color:#9B6A0A;border-color:rgba(212,160,23,.25);}
+.pill.e:hover{box-shadow:0 8px 20px rgba(212,160,23,.14);}
 
-/* EXPERIENCE */
+/* ── EXPERIENCE ── */
 #exp{background:#fff;}
-.tl{position:relative;padding-left:32px;}
-.tl::before{content:'';position:absolute;left:0;top:10px;bottom:0;width:1px;background:var(--bone);}
-.tl::after{content:'';position:absolute;left:0;top:10px;width:1px;height:0;background:linear-gradient(180deg,var(--mint),var(--sage));transition:height 1.6s cubic-bezier(.22,1,.36,1);}
-.tl.on::after{height:calc(100% - 10px);}
-.ti{position:relative;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid #F2ECE4;transition:transform .4s cubic-bezier(.22,1,.36,1);}
+.tl{position:relative;padding-left:clamp(24px,4vw,36px);}
+.tl::before{content:'';position:absolute;left:0;top:12px;bottom:0;width:1.5px;background:var(--bone);}
+.tl::after{content:'';position:absolute;left:0;top:12px;width:1.5px;height:0;background:linear-gradient(180deg,var(--mint),var(--sage));transition:height 1.8s cubic-bezier(.22,1,.36,1);}
+.tl.on::after{height:calc(100% - 12px);}
+.ti{position:relative;margin-bottom:clamp(36px,5vh,52px);padding-bottom:clamp(36px,5vh,52px);border-bottom:1px solid #F0EBE3;transition:transform .35s cubic-bezier(.22,1,.36,1);}
 .ti:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
-.ti:hover{transform:translateX(5px);}
-.tdot{position:absolute;left:-38px;top:8px;width:12px;height:12px;border-radius:50%;background:var(--forest);border:2.5px solid #fff;box-shadow:0 0 0 3px var(--pale);transition:transform .3s,box-shadow .3s;}
-.ti:hover .tdot{transform:scale(1.5);box-shadow:0 0 0 6px rgba(92,175,130,.15);}
-.t-date{font-size:10.5px;color:var(--mint);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:6px;font-weight:500;}
-.t-role{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--ink);margin-bottom:3px;}
-.t-org{font-size:13px;color:var(--sage);margin-bottom:14px;font-weight:500;}
-.t-desc{font-size:14px;color:var(--slate);line-height:1.82;font-weight:300;}
-.t-desc li{margin-left:16px;margin-bottom:5px;}
+.ti:hover{transform:translateX(6px);}
+.tdot{position:absolute;left:calc(-1 * clamp(24px,4vw,36px) - 5px);top:10px;width:12px;height:12px;border-radius:50%;background:var(--forest);border:2.5px solid #fff;box-shadow:0 0 0 3px var(--pale);transition:transform .3s,box-shadow .3s;}
+.ti:hover .tdot{transform:scale(1.5);box-shadow:0 0 0 7px rgba(82,183,136,.15);}
+.t-date{font-size:clamp(10px,1.5vw,11px);color:var(--mint);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;font-weight:600;}
+.t-role{font-family:'Playfair Display',serif;font-size:clamp(20px,3vw,26px);font-weight:700;color:var(--ink);margin-bottom:3px;line-height:1.2;}
+.t-org{font-size:clamp(12.5px,1.8vw,14px);color:var(--sage);margin-bottom:14px;font-weight:500;}
+.t-desc{font-size:clamp(13.5px,1.9vw,15px);color:var(--slate);line-height:1.85;font-weight:300;}
+.t-desc li{margin-left:18px;margin-bottom:6px;}
 
-/* EDUCATION */
-.edu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;}
+/* ── EDUCATION ── */
+.edu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:clamp(12px,2vw,20px);}
 .edu-card{
-  background:#fff;border:1px solid var(--bone);border-top:3px solid var(--forest);
-  border-radius:8px;padding:26px;position:relative;overflow:hidden;
-  transition:transform .45s cubic-bezier(.22,1,.36,1),box-shadow .45s;
+  background:#fff;border:1px solid var(--bone);border-top:3.5px solid var(--forest);
+  border-radius:10px;padding:clamp(20px,3vw,28px);
+  transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s;
 }
-.edu-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(92,175,130,.05),transparent);opacity:0;transition:opacity .3s;}
-.edu-card:hover::after{opacity:1;}
-.edu-card:hover{transform:translateY(-8px) rotateX(2deg);box-shadow:0 24px 48px rgba(30,77,56,.1);}
-.edu-deg{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--ink);margin-bottom:5px;line-height:1.3;}
-.edu-sch{font-size:12px;color:var(--sage);font-weight:500;margin-bottom:10px;line-height:1.4;}
-.edu-yr{display:inline-block;font-size:10.5px;background:var(--pale);color:var(--forest);padding:3px 10px;border-radius:20px;}
-.edu-cg{font-size:11px;color:var(--accent);font-weight:600;margin-top:8px;}
+.edu-card:hover{transform:translateY(-7px);box-shadow:0 20px 44px rgba(27,67,50,.1);}
+.edu-deg{font-family:'Playfair Display',serif;font-size:clamp(16px,2.4vw,19px);font-weight:700;color:var(--ink);margin-bottom:5px;line-height:1.3;}
+.edu-sch{font-size:clamp(11.5px,1.6vw,13px);color:var(--sage);font-weight:500;margin-bottom:10px;line-height:1.4;}
+.edu-yr{display:inline-block;font-size:clamp(10px,1.4vw,11px);background:var(--pale);color:var(--forest);padding:4px 12px;border-radius:20px;font-weight:500;}
+.edu-cg{font-size:clamp(11px,1.5vw,12px);color:var(--amber);font-weight:600;margin-top:8px;}
 
-/* PROJECTS */
+/* ── PROJECTS ── */
 #proj{background:var(--forest);position:relative;overflow:hidden;}
-#proj::before{content:'';position:absolute;width:700px;height:700px;border-radius:50%;background:rgba(255,255,255,.03);top:-280px;right:-200px;animation:spin 25s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg)}}
 #proj .s-label{color:var(--mint);}
 #proj .s-title{color:#fff;}
 .proj-card{
-  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
-  border-radius:16px;padding:40px;display:grid;grid-template-columns:1fr auto;
-  gap:28px;align-items:start;max-width:760px;backdrop-filter:blur(8px);
-  position:relative;z-index:1;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);
+  border-radius:18px;padding:clamp(28px,4vw,44px);
+  display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start;
+  max-width:800px;backdrop-filter:blur(10px);
   transition:transform .5s cubic-bezier(.22,1,.36,1),box-shadow .5s,background .3s;
 }
-.proj-card:hover{transform:translateY(-10px) scale(1.008);box-shadow:0 40px 80px rgba(0,0,0,.25);background:rgba(255,255,255,.1);}
-.proj-icon{width:60px;height:60px;background:var(--mint);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;animation:bob 4s ease-in-out infinite;box-shadow:0 10px 28px rgba(0,0,0,.2);}
-@keyframes bob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-8px) rotate(2deg)}}
-.proj-sub{font-size:10.5px;color:var(--mint);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;font-weight:500;}
-.proj-name{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;color:#fff;margin-bottom:12px;}
-.proj-desc{font-size:14.5px;color:rgba(255,255,255,.7);line-height:1.85;font-weight:300;}
+.proj-card:hover{transform:translateY(-8px);box-shadow:0 36px 72px rgba(0,0,0,.28);background:rgba(255,255,255,.11);}
+.proj-icon{
+  width:clamp(52px,7vw,64px);height:clamp(52px,7vw,64px);
+  background:var(--mint);border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:clamp(24px,3.5vw,30px);flex-shrink:0;
+  animation:bob 4.5s ease-in-out infinite;box-shadow:0 10px 28px rgba(0,0,0,.2);
+}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-7px) rotate(2deg)}}
+.proj-sub{font-size:clamp(10px,1.4vw,11px);color:var(--mint);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:8px;font-weight:600;}
+.proj-name{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,38px);font-weight:700;color:#fff;margin-bottom:12px;line-height:1.1;}
+.proj-desc{font-size:clamp(13.5px,1.9vw,15px);color:rgba(255,255,255,.68);line-height:1.88;font-weight:300;}
 .proj-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;}
-.ptag{background:rgba(255,255,255,.08);color:rgba(255,255,255,.8);font-size:11px;padding:5px 12px;border-radius:20px;border:1px solid rgba(255,255,255,.18);transition:background .2s,transform .2s;cursor:default;}
-.ptag:hover{background:rgba(255,255,255,.16);transform:translateY(-2px);}
+.ptag{
+  background:rgba(255,255,255,.09);color:rgba(255,255,255,.8);
+  font-size:clamp(10.5px,1.4vw,12px);padding:6px 13px;border-radius:20px;
+  border:1px solid rgba(255,255,255,.2);
+  transition:background .2s,transform .2s;cursor:default;
+}
+.ptag:hover{background:rgba(255,255,255,.17);transform:translateY(-2px);}
 
-/* CONTACT */
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
-.contact-h{font-family:'Playfair Display',serif;font-size:clamp(38px,3.5vw,56px);font-weight:700;line-height:1.1;color:var(--ink);margin-bottom:18px;}
+/* ── CONTACT ── */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,5vw,64px);align-items:center;}
+.contact-h{font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,58px);font-weight:700;line-height:1.05;color:var(--ink);margin-bottom:16px;}
 .contact-h em{font-style:italic;color:var(--forest);}
-.contact-sub{font-size:15px;color:var(--slate);line-height:1.85;margin-bottom:36px;font-weight:300;}
-.clinks{display:flex;flex-direction:column;gap:12px;}
-.ci{display:flex;align-items:center;gap:14px;font-size:14px;color:var(--slate);transition:transform .32s cubic-bezier(.22,1,.36,1),color .2s;cursor:default;}
+.contact-sub{font-size:clamp(14px,2vw,15.5px);color:var(--slate);line-height:1.85;margin-bottom:32px;font-weight:300;}
+.clinks{display:flex;flex-direction:column;gap:14px;}
+.ci{display:flex;align-items:center;gap:14px;font-size:clamp(13px,1.8vw,14.5px);color:var(--slate);transition:transform .28s cubic-bezier(.22,1,.36,1),color .2s;cursor:default;}
 .ci:hover{transform:translateX(6px);color:var(--forest);}
-.cicon{width:42px;height:42px;background:var(--pale);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;transition:transform .3s,background .3s;}
+.cicon{width:clamp(38px,5vw,44px);height:clamp(38px,5vw,44px);background:var(--pale);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:clamp(16px,2vw,18px);flex-shrink:0;transition:transform .28s,background .28s;}
 .ci:hover .cicon{transform:rotate(8deg) scale(1.1);background:var(--mint);}
-.open-card{background:var(--forest);color:#fff;border-radius:16px;padding:36px;position:relative;overflow:hidden;transition:transform .5s cubic-bezier(.22,1,.36,1),box-shadow .5s;}
-.open-card:hover{transform:translateY(-6px) rotateY(2deg);box-shadow:0 28px 64px rgba(30,77,56,.28);}
-.open-card::before{content:'';position:absolute;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.04);top:-80px;right:-80px;animation:pulse2 5s ease-in-out infinite;}
-@keyframes pulse2{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
-.open-card h3{font-family:'Playfair Display',serif;font-size:26px;margin-bottom:12px;position:relative;}
-.open-card p{font-size:14px;color:rgba(255,255,255,.72);line-height:1.8;margin-bottom:22px;position:relative;font-weight:300;}
-.dpills{display:flex;flex-wrap:wrap;gap:8px;position:relative;}
-.dp{background:rgba(255,255,255,.1);color:#fff;font-size:11.5px;padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.22);transition:background .2s,transform .25s cubic-bezier(.22,1,.36,1);cursor:default;}
+
+.open-card{
+  background:var(--forest);color:#fff;border-radius:18px;
+  padding:clamp(28px,4vw,38px);
+  transition:transform .45s cubic-bezier(.22,1,.36,1),box-shadow .45s;
+}
+.open-card:hover{transform:translateY(-6px);box-shadow:0 24px 56px rgba(27,67,50,.28);}
+.open-card h3{font-family:'Playfair Display',serif;font-size:clamp(22px,3vw,28px);margin-bottom:12px;}
+.open-card p{font-size:clamp(13px,1.8vw,14.5px);color:rgba(255,255,255,.7);line-height:1.82;margin-bottom:20px;font-weight:300;}
+.dpills{display:flex;flex-wrap:wrap;gap:8px;}
+.dp{
+  background:rgba(255,255,255,.1);color:#fff;
+  font-size:clamp(11px,1.5vw,12.5px);padding:6px 15px;border-radius:20px;
+  border:1px solid rgba(255,255,255,.2);
+  transition:background .2s,transform .22s cubic-bezier(.22,1,.36,1);cursor:default;
+}
 .dp:hover{background:rgba(255,255,255,.2);transform:translateY(-3px);}
 
-/* FOOTER */
-footer{background:var(--ink);color:rgba(255,255,255,.35);text-align:center;padding:28px;font-size:11.5px;letter-spacing:.5px;position:relative;overflow:hidden;}
+/* ── FOOTER ── */
+footer{background:var(--ink);color:rgba(255,255,255,.32);text-align:center;padding:28px;font-size:clamp(11px,1.5vw,12px);letter-spacing:.5px;position:relative;overflow:hidden;}
 footer span{color:var(--mint);}
-.fw{position:absolute;top:0;left:0;width:200%;height:2px;background:linear-gradient(90deg,var(--mint),var(--accent),var(--mint));animation:fwave 4s linear infinite;}
+.fw{position:absolute;top:0;left:0;width:200%;height:2px;background:linear-gradient(90deg,var(--mint),var(--amber),var(--mint));animation:fwave 4s linear infinite;}
 @keyframes fwave{to{transform:translateX(-50%)}}
 
-/* RESPONSIVE */
-@media(max-width:900px){
-  .hero{grid-template-columns:1fr;}
-  .hero-l{clip-path:none; padding:72px 32px 56px;}
-  .hero-r{padding:40px 32px 56px;}
-  .hero-name{white-space:normal; font-size:clamp(44px,10vw,64px);}
+/* ── MOBILE ── */
+@media(max-width:820px){
+  .hero-inner{grid-template-columns:1fr;}
+  .hero-r{padding:32px clamp(20px,5vw,40px) 56px;}
+  .hero-l{padding-top:clamp(56px,10vh,80px);}
   .about-grid,.contact-grid{grid-template-columns:1fr;}
-  section{padding:64px 28px;}
-  .nav{padding:0 20px; gap:16px;}
-  .nl{font-size:12px;}
-  .proj-card{grid-template-columns:1fr; gap:20px;}
-  .proj-icon{margin-top:4px;}
+  .nav{gap:clamp(12px,2vw,20px);}
+  .proj-card{grid-template-columns:1fr;gap:18px;}
+  .card-row{grid-template-columns:1fr 1fr;}
+  .hero-cards{max-width:100%;flex-direction:column;}
 }
-
-@media(max-width:600px){
-  /* Global */
-  section{padding:52px 20px;}
-  .s-title{font-size:clamp(28px,7vw,38px); margin-bottom:36px;}
-
-  /* NAV — hide text links, show only logo + hamburger feel */
-  .nav{padding:0 16px; gap:10px; height:52px; overflow-x:auto; scrollbar-width:none;}
+@media(max-width:560px){
+  .nav{overflow-x:auto;scrollbar-width:none;padding:0 16px;gap:14px;}
   .nav::-webkit-scrollbar{display:none;}
-  .nav-logo{font-size:17px; flex-shrink:0;}
-  .nl{font-size:11px; white-space:nowrap; flex-shrink:0; padding-bottom:1px;}
-
-  /* HERO */
-  .hero-l{padding:56px 20px 44px;}
-  .hero-badge{font-size:9.5px; padding:6px 12px; margin-bottom:22px;}
-  .hero-name{font-size:clamp(40px,11vw,58px); line-height:1.0;}
-  .hero-title{font-size:10px; letter-spacing:2px; margin-bottom:20px;}
-  .hero-rule{margin-bottom:18px;}
-  .hero-desc{font-size:14px; line-height:1.8; margin-bottom:36px; max-width:100%;}
-  .hero-cta{gap:10px;}
-  .btn-p,.btn-o{padding:12px 22px; font-size:12.5px; width:100%; text-align:center;}
-  .hero-r{padding:32px 20px 48px;}
-  .avatar{width:100px; height:100px; font-size:30px; margin-bottom:22px;}
-  .stat-grid{gap:10px;}
-  .stat{padding:14px 10px;}
-  .stat-n{font-size:24px;}
-  .stat-l{font-size:9px;}
-
-  /* ABOUT */
-  .about-grid{gap:36px;}
-  .about-text p{font-size:14.5px;}
-  .pill{font-size:11.5px; padding:5px 11px;}
-
-  /* EXPERIENCE */
-  .tl{padding-left:22px;}
-  .tdot{left:-28px; width:10px; height:10px;}
-  .t-role{font-size:19px;}
-  .t-desc{font-size:13.5px;}
-  .ti{margin-bottom:36px; padding-bottom:36px;}
-
-  /* EDUCATION */
-  .edu-grid{grid-template-columns:1fr; gap:14px;}
-  .edu-card{padding:20px;}
-  .edu-deg{font-size:15px;}
-
-  /* PROJECTS */
-  .proj-card{padding:26px 20px; grid-template-columns:1fr;}
-  .proj-name{font-size:24px;}
-  .proj-desc{font-size:13.5px;}
-  .proj-icon{width:50px; height:50px; font-size:22px;}
-
-  /* CONTACT */
-  .contact-grid{gap:40px;}
-  .contact-h{font-size:clamp(30px,8vw,40px);}
-  .contact-sub{font-size:14px;}
-  .open-card{padding:26px 20px;}
-  .open-card h3{font-size:21px;}
-  .cicon{width:38px; height:38px; font-size:15px;}
-
-  /* LOADER */
-  .l-name{font-size:38px;}
-
-  /* hide custom cursor on touch */
-  #cur,#cur-r{display:none;}
-  body{cursor:auto;}
+  .nl{white-space:nowrap;flex-shrink:0;}
+  .edu-grid{grid-template-columns:1fr;}
+  .ti{margin-bottom:32px;padding-bottom:32px;}
 }
 
-@media(max-width:380px){
-  .hero-name{font-size:clamp(34px,12vw,46px);}
-  .hero-l{padding:48px 16px 36px;}
-  section{padding:44px 16px;}
-  .nav{padding:0 12px;}
+.profile-img-card{text-align:center;}
+.profile-img{
+  width:110px;height:110px;border-radius:50%;
+  object-fit:cover;object-position:center top;
+  border:2.5px solid var(--mint);
+  filter:brightness(1.15) contrast(1.05);
+  display:block;margin:0 auto;
 }
 </style>
 </head>
 <body>
 
-<div id="cur"></div>
-<div id="cur-r"></div>
 <div id="sp"></div>
-<canvas id="bg"></canvas>
 
 <div id="loader">
   <div class="l-name" id="ln"></div>
-  <div class="l-track"><div class="l-fill"></div></div>
+  <div class="l-bar"><div class="l-fill"></div></div>
   <div class="l-sub">Agribusiness · Digital Strategy</div>
 </div>
 
@@ -432,26 +331,60 @@ footer span{color:var(--mint);}
 
 <!-- HERO -->
 <section class="hero" id="top">
-  <div class="hero-l">
-    <div class="hparts" id="particles"></div>
-    <div class="hero-badge"><span class="bdot"></span>Open to Full-Time Roles &middot; 2026</div>
-    <h1 class="hero-name">B. Sai Teja</h1>
-    <p class="hero-title">MBA Agribusiness &nbsp;&middot;&nbsp; ICAR-IIMR &nbsp;&middot;&nbsp; Digital Strategy</p>
-    <div class="hero-rule"></div>
-    <p class="hero-desc">MBA candidate in Agribusiness Management at PJTSAU, currently driving business development and millet value chain initiatives at NutriHub, ICAR-IIMR Hyderabad. Combining rigorous agricultural field experience with digital marketing expertise to generate measurable impact across agri-input and agri-tech sectors.</p>
-    <div class="hero-cta">
-      <button class="btn-p" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get in Touch</button>
-      <button class="btn-o" onclick="document.getElementById('exp').scrollIntoView({behavior:'smooth'})">View Experience</button>
-    </div>
+  <div class="hero-bg">
+    <div class="hb-circle" style="width:600px;height:600px;top:-200px;right:-150px;animation-duration:8s;"></div>
+    <div class="hb-circle" style="width:300px;height:300px;bottom:100px;left:-80px;animation-duration:6s;animation-delay:1s;"></div>
   </div>
-  <div class="hero-r" id="hero-r">
-    <div class="hero-card" id="hero-card">
-      <div class="avatar">ST</div>
-      <div class="stat-grid">
-        <div class="stat"><div class="stat-n count" data-t="8.24" data-s="8.00" data-d="2">8.00</div><div class="stat-l">B.Sc CGPA</div></div>
-        <div class="stat"><div class="stat-n count" data-t="5" data-suffix="mo">0</div><div class="stat-l">Field Work</div></div>
-        <div class="stat"><div class="stat-n count" data-t="2">0</div><div class="stat-l">Internships</div></div>
-        <div class="stat"><div class="stat-n">'26</div><div class="stat-l">MBA Grad</div></div>
+  <div class="hero-inner">
+    <div class="hero-l">
+      <div class="hero-badge"><span class="bdot"></span>Open to Full-Time Roles · 2026</div>
+      <h1 class="hero-name">B. Sai Teja</h1>
+      <p class="hero-tag">MBA Agribusiness &nbsp;·&nbsp; PJTSAU &nbsp;·&nbsp; ICAR-IIMR</p>
+      <div class="hero-rule"></div>
+      <p class="hero-desc">MBA candidate driving millet value chain development at NutriHub, ICAR-IIMR Hyderabad — bridging deep agricultural field experience with digital marketing expertise across agri-tech and agri-input sectors.</p>
+      <div class="hero-cta">
+        <button class="btn-p" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get in Touch</button>
+        <button class="btn-o" onclick="document.getElementById('exp').scrollIntoView({behavior:'smooth'})">View Experience</button>
+      </div>
+    </div>
+    <div class="hero-r">
+      <div class="hero-cards">
+
+        <!-- Profile Image Card -->
+        <div class="info-card profile-img-card">
+          <img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCARlCGcDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAj/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AIyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB//Z" alt="B. Sai Teja" class="profile-img">
+          <div class="card-title" style="margin-top:14px;">B. Sai Teja</div>
+          <div class="card-sub">MBA Agribusiness · <span class="card-accent">PJTSAU '26</span></div>
+        </div>
+
+        <!-- Card 1: Current Role -->
+        <div class="info-card">
+          <span class="card-icon">🌾</span>
+          <div class="card-title">Business Dev Intern</div>
+          <div class="card-sub">NutriHub · <span class="card-accent">ICAR-IIMR, Hyderabad</span><br>Millet value chain &amp; market research</div>
+        </div>
+
+        <!-- Card 2 & 3: Row -->
+        <div class="card-row">
+          <div class="info-card sm">
+            <span class="card-icon" style="font-size:20px;margin-bottom:7px;">🎓</span>
+            <div class="card-title">MBA '26</div>
+            <div class="card-sub">Agribusiness<br><span class="card-accent">PJTSAU</span></div>
+          </div>
+          <div class="info-card sm">
+            <span class="card-icon" style="font-size:20px;margin-bottom:7px;">🌿</span>
+            <div class="card-title">5 Months</div>
+            <div class="card-sub">Farm-level field<br><span class="card-accent">RAWEP, Khammam</span></div>
+          </div>
+        </div>
+
+        <!-- Card 4: AGRIMETS -->
+        <div class="info-card">
+          <span class="card-icon">📲</span>
+          <div class="card-title">AGRIMETS</div>
+          <div class="card-sub">Self-built Telegram platform · <span class="card-accent">Mock tests &amp; study resources</span> for Agriculture exam aspirants across Telangana</div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -474,8 +407,8 @@ footer span{color:var(--mint);}
   <div class="about-grid">
     <div class="about-text rvl d1">
       <p>I am an <strong>MBA (Agribusiness Management)</strong> candidate at Professor Jayashankar Telangana State Agricultural University (PJTSAU), graduating in 2026, with a B.Sc. (Hons.) Agriculture from the same institution — achieving a CGPA of 8.24. My academic foundation is reinforced by five months of immersive farm-level fieldwork under the Rural Agricultural Work Experience Programme (RAWEP) in Khammam district, Telangana.</p>
-      <p>Currently embedded in the <strong>Business Wing of NutriHub at ICAR-Indian Institute of Millets Research (IIMR), Hyderabad</strong>, I contribute to market research, millet-based enterprise development, and multi-stakeholder coordination across the value chain. Prior to this, I executed digital marketing campaigns for Butter Tree Foods Pvt. Ltd., improving brand reach and audience engagement through strategic social media content.</p>
-      <p>Beyond institutional roles, I independently conceived and launched <strong>AGRIMETS</strong> — a Telegram-based competitive examination platform for Agriculture aspirants across Telangana, offering structured mock tests and curated study material. This initiative reflects a consistent approach of identifying gaps and building practical, scalable solutions.</p>
+      <p>Currently embedded in the <strong>Business Wing of NutriHub at ICAR-IIMR, Hyderabad</strong>, I contribute to market research, millet-based enterprise development, and multi-stakeholder coordination across the value chain. Prior to this, I executed digital marketing campaigns for Butter Tree Foods Pvt. Ltd., improving brand reach through strategic social media content.</p>
+      <p>Beyond institutional roles, I independently conceived and launched <strong>AGRIMETS</strong> — a Telegram-based competitive exam platform for Agriculture aspirants across Telangana, offering structured mock tests and curated study material.</p>
     </div>
     <div class="rvr d2">
       <p class="sk-head">Agricultural Expertise</p>
@@ -502,9 +435,9 @@ footer span{color:var(--mint);}
       </div>
       <p class="sk-head">Languages</p>
       <div class="pills">
-        <span class="pill">English &mdash; Fluent</span>
-        <span class="pill">Telugu &mdash; Native</span>
-        <span class="pill">Hindi &mdash; Conversational</span>
+        <span class="pill">English — Fluent</span>
+        <span class="pill">Telugu — Native</span>
+        <span class="pill">Hindi — Conversational</span>
       </div>
     </div>
   </div>
@@ -515,52 +448,47 @@ footer span{color:var(--mint);}
   <div class="s-label rv">Professional History</div>
   <h2 class="s-title rv d1">Experience</h2>
   <div class="tl" id="tl">
-
     <div class="ti rv d1">
       <div class="tdot"></div>
-      <div class="t-date">January 2025 &ndash; Present &middot; 3 Months</div>
+      <div class="t-date">March 2026 – Present · 2 Months</div>
       <div class="t-role">Business Development Intern</div>
-      <div class="t-org">NutriHub &middot; ICAR-Indian Institute of Millets Research (IIMR), Hyderabad</div>
-      <div class="t-desc">Embedded within the Business Wing of IIMR's agri-business incubation centre, contributing to the growth and commercialisation of millet-based enterprises. Responsibilities span market research, business development strategy, and multi-stakeholder coordination to accelerate value chain development across the millet ecosystem.</div>
+      <div class="t-org">NutriHub · ICAR-Indian Institute of Millets Research (IIMR), Hyderabad</div>
+      <div class="t-desc">Working in the Business Wing of NutriHub, IIMR's agri-business incubation centre. Supporting market research, business development activities, and stakeholder coordination to promote millet-based enterprises and value chain development.</div>
     </div>
-
     <div class="ti rv d2">
       <div class="tdot"></div>
-      <div class="t-date">October 2025 &ndash; November 2025 &middot; 1 Month</div>
+      <div class="t-date">October 2025 – November 2025 · 2 Months</div>
       <div class="t-role">Digital Marketing Intern</div>
       <div class="t-org">Butter Tree Foods Pvt. Ltd.</div>
       <div class="t-desc">
         <ul>
-          <li>Conceptualised and executed targeted social media campaigns using Canva, achieving measurable improvements in page engagement and organic reach.</li>
-          <li>Produced promotional video content and graphic assets that strengthened brand identity and narrative consistency across platforms.</li>
-          <li>Managed content scheduling, community engagement, and performance monitoring to establish and grow a sustained brand presence.</li>
+          <li>Designed and executed social media campaigns using Canva, achieving measurable improvements in page engagement and organic reach.</li>
+          <li>Created promotional video content and graphic assets for brand storytelling across platforms.</li>
+          <li>Managed post scheduling and community interaction to build and sustain brand presence.</li>
         </ul>
       </div>
     </div>
-
     <div class="ti rv d3">
       <div class="tdot"></div>
-      <div class="t-date">January 2024 &ndash; May 2024 &middot; RAWEP / AELP</div>
-      <div class="t-role">Agricultural Field Intern</div>
-      <div class="t-org">PJTSAU &middot; Khammam &amp; Aswaraopet, Telangana</div>
+      <div class="t-date">January 2024 – May 2024 · RAWEP / AELP</div>
+      <div class="t-role">Agriculture Extension Intern</div>
+      <div class="t-org">Agricultural College, Aswaraopet · PJTSAU, Khammam &amp; Aswaraopet, Telangana</div>
       <div class="t-desc">
         <ul>
-          <li>Conducted Method Demonstrations for farming communities on contemporary cultivation practices and integrated pest management for Cotton and Chilli crops.</li>
-          <li>Performed comprehensive soil and irrigation water analyses — evaluating NPK, pH, EC, Organic Carbon, carbonates, and trace minerals — to generate Soil Health Cards and fertiliser dosage recommendations.</li>
-          <li>Undertook immersive rural residence across Khammam district to study farmer socio-economic conditions, land-use patterns, and ground-level agricultural challenges.</li>
-          <li>Translated laboratory research findings into actionable farm-level guidance, effectively bridging the gap between institutional knowledge and practical application.</li>
+          <li>Conducted Method Demonstrations for farmers on modern cultivation practices and pest management for Cotton and Chilli crops.</li>
+          <li>Performed comprehensive soil and irrigation water analyses — NPK, pH, EC, Organic Carbon — to generate Soil Health Cards and fertiliser recommendations.</li>
+          <li>Studied farmer socio-economic conditions and cropping patterns firsthand across Khammam district.</li>
+          <li>Bridged lab technology to land by translating technical recommendations into practical farm-level guidance.</li>
         </ul>
       </div>
     </div>
-
     <div class="ti rv d4">
       <div class="tdot"></div>
       <div class="t-date">Volunteer</div>
       <div class="t-role">National Service Scheme (NSS)</div>
       <div class="t-org">PJTSAU</div>
-      <div class="t-desc">Participated actively in community development initiatives, social awareness campaigns, and residential service camps — demonstrating a sustained commitment to social responsibility and collaborative leadership beyond academic pursuits.</div>
+      <div class="t-desc">Participated actively in community development initiatives, social awareness campaigns, and residential service camps.</div>
     </div>
-
   </div>
 </section>
 
@@ -570,21 +498,21 @@ footer span{color:var(--mint);}
   <h2 class="s-title rv d1">Education</h2>
   <div class="edu-grid">
     <div class="edu-card rv d1">
-      <div class="edu-deg">MBA &mdash; Agribusiness Management</div>
+      <div class="edu-deg">MBA — Agribusiness Management</div>
       <div class="edu-sch">Professor Jayashankar Telangana State Agricultural University</div>
-      <div class="edu-yr">2024 &ndash; 2026</div>
+      <div class="edu-yr">2024 – 2026</div>
     </div>
     <div class="edu-card rv d2">
       <div class="edu-deg">B.Sc. (Hons.) Agriculture</div>
       <div class="edu-sch">Professor Jayashankar Telangana State Agricultural University</div>
-      <div class="edu-yr">2020 &ndash; 2024</div>
+      <div class="edu-yr">2020 – 2024</div>
       <div class="edu-cg">CGPA: 8.24</div>
     </div>
     <div class="edu-card rv d3">
       <div class="edu-deg">Diploma in Agriculture</div>
       <div class="edu-sch">Agriculture Polytechnic, Palem</div>
-      <div class="edu-yr">2016 &ndash; 2018</div>
-      <div class="edu-cg">Score: 8.6</div>
+      <div class="edu-yr">2016 – 2018</div>
+      <div class="edu-cg">Score: 8.6 / 10</div>
     </div>
     <div class="edu-card rv d4">
       <div class="edu-deg">Secondary School Certificate (SSC)</div>
@@ -601,9 +529,9 @@ footer span{color:var(--mint);}
   <h2 class="s-title rv d1">Projects</h2>
   <div class="proj-card rv d2">
     <div>
-      <div class="proj-sub">EdTech &middot; Community Platform</div>
+      <div class="proj-sub">EdTech · Community Platform</div>
       <div class="proj-name">AGRIMETS</div>
-      <p class="proj-desc">A self-initiated digital learning platform built on Telegram, designed to address the shortage of structured, accessible study resources for Agriculture competitive examination aspirants across Telangana. The platform delivers syllabus-aligned mock tests, curated study notes, and organised content coverage for state-level agriculture examinations. Conceived, built, and maintained independently using no-code development tools — now actively utilised by peers across the region. The initiative reflects a deliberate approach to identifying an unmet need within the agricultural education landscape and building a practical, scalable solution without institutional support.</p>
+      <p class="proj-desc">A self-initiated digital learning platform built on Telegram, designed to address the shortage of structured, accessible study resources for Agriculture competitive examination aspirants across Telangana. Delivers syllabus-aligned mock tests, curated study notes, and organised content coverage for state-level agriculture examinations. Conceived, built, and maintained independently using no-code tools — now actively used by peers across the region. A deliberate response to an unmet need in agricultural education, built without institutional support.</p>
       <div class="proj-tags">
         <span class="ptag">Telegram Bot</span>
         <span class="ptag">No-Code Development</span>
@@ -622,7 +550,7 @@ footer span{color:var(--mint);}
   <div class="contact-grid">
     <div class="rvl">
       <h2 class="contact-h">Available for the<br><em>right opportunity.</em></h2>
-      <p class="contact-sub">Actively seeking full-time roles in agri-input, agri-tech, or agribusiness development where agricultural expertise and strategic thinking converge. MBA graduating 2026 from PJTSAU, Hyderabad.</p>
+      <p class="contact-sub">Actively seeking full-time roles in agri-input, agri-tech, or agribusiness development. MBA graduating 2026 from PJTSAU, Hyderabad.</p>
       <div class="clinks">
         <div class="ci"><div class="cicon">📧</div><a href="mailto:saiteja1097@proton.me" style="color:inherit;text-decoration:none;">saiteja1097@proton.me</a></div>
         <div class="ci"><div class="cicon">📱</div><span>+91 83675 29281</span></div>
@@ -651,7 +579,7 @@ footer span{color:var(--mint);}
 
 <footer>
   <div class="fw"></div>
-  &copy; 2026 &nbsp;<span>B. Sai Teja</span>&nbsp; &middot; MBA Agribusiness &middot; PJTSAU, Hyderabad
+  &copy; 2026 &nbsp;<span>B. Sai Teja</span>&nbsp; · MBA Agribusiness · PJTSAU, Hyderabad
 </footer>
 
 </div>
@@ -659,132 +587,33 @@ footer span{color:var(--mint);}
 <script>
 // LOADER
 const ln = document.getElementById('ln');
-'B. Sai Teja'.split('').forEach((c,i)=>{
-  const s=document.createElement('span');
-  s.textContent=c===' '?'\u00A0':c;
-  s.style.animationDelay=(.07*i)+'s';
+'B. Sai Teja'.split('').forEach((c, i) => {
+  const s = document.createElement('span');
+  s.textContent = c === ' ' ? '\u00A0' : c;
+  s.style.animationDelay = (.07 * i) + 's';
   ln.appendChild(s);
 });
-setTimeout(()=>{
-  document.getElementById('loader').classList.add('out');
-  runCounters();
-},2300);
+setTimeout(() => document.getElementById('loader').classList.add('out'), 2300);
 
-// CURSOR (RAF-based, no transition on position)
-const cur=document.getElementById('cur'), curR=document.getElementById('cur-r');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
-(function animC(){
-  cur.style.left=mx+'px'; cur.style.top=my+'px';
-  rx+=(mx-rx)*.1; ry+=(my-ry)*.1;
-  curR.style.left=rx+'px'; curR.style.top=ry+'px';
-  requestAnimationFrame(animC);
-})();
-document.querySelectorAll('button,a,.pill,.dp,.ptag,.stat,.ci,.edu-card,.proj-card').forEach(el=>{
-  el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
-  el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
-});
+// SCROLL PROGRESS + NAV
+window.addEventListener('scroll', () => {
+  const st = window.scrollY, dh = document.documentElement.scrollHeight - window.innerHeight;
+  document.getElementById('sp').style.width = (st / dh * 100) + '%';
+  document.getElementById('nav').classList.toggle('on', st > 10);
+}, { passive: true });
 
-// SCROLL
-window.addEventListener('scroll',()=>{
-  const st=window.scrollY, dh=document.documentElement.scrollHeight-window.innerHeight;
-  document.getElementById('sp').style.width=(st/dh*100)+'%';
-  document.getElementById('nav').classList.toggle('on',st>10);
-},{ passive:true });
-
-// REVEAL
-const io=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');});
-},{threshold:0.1});
-document.querySelectorAll('.rv,.rvl,.rvr').forEach(el=>io.observe(el));
+// REVEAL on scroll
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.rv,.rvl,.rvr').forEach(el => io.observe(el));
 
 // TIMELINE
-const tlio=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');});
-},{threshold:0.12});
-tlio.observe(document.getElementById('tl'));
-
-// COUNTERS
-function runCounters(){
-  document.querySelectorAll('.count').forEach(el=>{
-    const t=parseFloat(el.dataset.t), s=parseFloat(el.dataset.s||0), d=parseInt(el.dataset.d||0);
-    const suffix=el.dataset.suffix||'';
-    let c=s; const steps=70, inc=(t-s)/steps;
-    const iv=setInterval(()=>{
-      c+=inc; if(c>=t){c=t;clearInterval(iv);}
-      el.textContent=c.toFixed(d)+suffix;
-    },20);
-  });
-}
-
-// 3D TILT
-const hr=document.getElementById('hero-r'), hc=document.getElementById('hero-card');
-hr.addEventListener('mousemove',e=>{
-  const r=hr.getBoundingClientRect();
-  const dx=(e.clientX-r.left-r.width/2)/r.width*14;
-  const dy=(e.clientY-r.top-r.height/2)/r.height*14;
-  hc.style.transform=`rotateY(${dx}deg) rotateX(${-dy}deg)`;
-});
-hr.addEventListener('mouseleave',()=>{hc.style.transform='';});
-
-// PARTICLES
-const pc=document.getElementById('particles');
-for(let i=0;i<22;i++){
-  const p=document.createElement('div');
-  p.className='hp';
-  const sz=2+Math.random()*4;
-  p.style.cssText=`left:${Math.random()*100}%;width:${sz}px;height:${sz}px;
-    animation-duration:${8+Math.random()*10}s;animation-delay:${Math.random()*8}s;
-    opacity:${.1+Math.random()*.22};`;
-  pc.appendChild(p);
-}
-
-// THREE.JS BG
-(function(){
-  const canvas=document.getElementById('bg');
-  const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-  renderer.setSize(window.innerWidth,window.innerHeight);
-  const scene=new THREE.Scene();
-  const cam=new THREE.PerspectiveCamera(60,window.innerWidth/window.innerHeight,.1,100);
-  cam.position.z=5;
-
-  const geo=new THREE.BufferGeometry();
-  const N=220, pos=new Float32Array(N*3);
-  for(let i=0;i<N;i++){pos[i*3]=(Math.random()-.5)*22;pos[i*3+1]=(Math.random()-.5)*22;pos[i*3+2]=(Math.random()-.5)*10;}
-  geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
-  const pts=new THREE.Points(geo,new THREE.PointsMaterial({color:0x5CAF82,size:.055,transparent:true,opacity:.55}));
-  scene.add(pts);
-
-  const mk=(G,col,x,y,z)=>{
-    const m=new THREE.Mesh(new G(),new THREE.MeshStandardMaterial({color:col,wireframe:true,transparent:true,opacity:.28}));
-    m.position.set(x,y,z);scene.add(m);return m;
-  };
-  const tk=mk(()=>new THREE.TorusKnotGeometry(1.1,.3,110,14),0x1E4D38,4.5,.5,-2);
-  const ic=mk(()=>new THREE.IcosahedronGeometry(.75,1),0x5CAF82,-5,2,-1);
-  const oc=mk(()=>new THREE.OctahedronGeometry(.55),0x3A7D5B,3,-3.5,0);
-
-  scene.add(new THREE.AmbientLight(0xffffff,.5));
-  const pl=new THREE.PointLight(0x5CAF82,1,20);
-  pl.position.set(3,3,3);scene.add(pl);
-
-  let mox=0,moy=0;
-  document.addEventListener('mousemove',e=>{mox=(e.clientX/window.innerWidth-.5)*2;moy=-(e.clientY/window.innerHeight-.5)*2;});
-  window.addEventListener('resize',()=>{cam.aspect=window.innerWidth/window.innerHeight;cam.updateProjectionMatrix();renderer.setSize(window.innerWidth,window.innerHeight);});
-
-  let t=0;
-  (function loop(){
-    requestAnimationFrame(loop);t+=.004;
-    tk.rotation.x=t*.45;tk.rotation.y=t*.28;
-    ic.rotation.x=t*.38;ic.rotation.z=t*.55;
-    oc.rotation.x=t*.65;oc.rotation.y=t*.38;
-    pts.rotation.y=t*.04;
-    cam.position.x+=(mox*.45-cam.position.x)*.022;
-    cam.position.y+=(moy*.45-cam.position.y)*.022;
-    cam.lookAt(scene.position);
-    renderer.render(scene,cam);
-  })();
-})();
+const tlio = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
+}, { threshold: 0.1 });
+const tl = document.getElementById('tl');
+if (tl) tlio.observe(tl);
 </script>
 </body>
 </html>
