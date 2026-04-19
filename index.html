@@ -288,26 +288,31 @@ section{padding:clamp(52px,7vh,90px) clamp(20px,6vw,64px);}
 .cicon{width:clamp(38px,4vw,46px);height:clamp(38px,4vw,46px);background:var(--pale);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:clamp(15px,2vw,18px);flex-shrink:0;transition:transform .28s,background .28s;}
 .ci:hover .cicon{transform:rotate(8deg) scale(1.1);background:var(--mint);}
 .open-work-card{
-  background:#fff;color:var(--ink);border-radius:16px;padding:clamp(24px,3.3vw,36px);
-  border:1px solid rgba(27,67,50,.12);
-  transition:transform .42s cubic-bezier(.22,1,.36,1),box-shadow .42s,border-color .3s;
-  box-shadow:0 18px 42px rgba(27,67,50,.1);
+  background:#fff;color:var(--ink);border-radius:16px;padding:clamp(18px,2.8vw,24px);
+  border:1px solid rgba(27,67,50,.16);
+  transition:box-shadow .22s ease,border-color .22s ease,transform .22s ease;
+  box-shadow:0 10px 24px rgba(27,67,50,.08);
 }
-.open-work-card:hover{transform:translateY(-6px);box-shadow:0 24px 54px rgba(27,67,50,.16);border-color:rgba(82,183,136,.45);}
-.ow-head{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
-.ow-dot{
-  width:14px;height:14px;border-radius:50%;background:#0a7f49;
-  box-shadow:0 0 0 4px rgba(10,127,73,.13),0 0 16px rgba(10,127,73,.45);
-  animation:owPulse 2.2s ease-in-out infinite;
+.open-work-card:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(27,67,50,.12);border-color:rgba(82,183,136,.5);}
+.ow-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:12px;flex-wrap:wrap;}
+.ow-profile{display:flex;align-items:center;gap:12px;min-width:0;}
+.ow-avatar{
+  width:54px;height:54px;border-radius:50%;object-fit:cover;flex-shrink:0;
+  border:2px solid #e9f5ef;background:#f0f7f3;
 }
-.ow-title{font-family:'Playfair Display',serif;font-size:clamp(22px,2.9vw,30px);line-height:1.05;}
-.ow-sub{font-size:clamp(14px,1.8vw,15.5px);color:var(--slate);line-height:1.8;margin-bottom:16px;font-weight:400;}
-.ow-pill-wrap{display:flex;flex-wrap:wrap;gap:8px;}
-.ow-pill{
-  background:#E7F7ED;color:#0a7f49;font-size:clamp(11.5px,1.5vw,13px);
-  padding:7px 14px;border-radius:18px;border:1px solid rgba(10,127,73,.2);font-weight:700;
+.ow-title{font-family:'Playfair Display',serif;font-size:clamp(20px,2.6vw,26px);line-height:1.05;margin:0;}
+.ow-role{margin:4px 0 0;font-size:clamp(12px,1.6vw,13.5px);color:var(--slate);line-height:1.5;}
+.ow-status{
+  background:#e7f7ed;color:#0a7f49;font-size:12px;font-weight:700;letter-spacing:.02em;
+  border:1px solid rgba(10,127,73,.25);border-radius:999px;padding:6px 10px;white-space:nowrap;
 }
-@keyframes owPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.13)}}
+.ow-sub{font-size:clamp(14px,1.8vw,15.5px);color:var(--slate);line-height:1.7;margin-bottom:14px;font-weight:400;}
+.ow-link{
+  display:inline-flex;align-items:center;justify-content:center;align-self:flex-start;
+  background:#0A66C2;color:#fff;text-decoration:none;font-size:13px;font-weight:700;
+  padding:10px 14px;border-radius:10px;transition:background .2s ease,transform .2s ease;
+}
+.ow-link:hover{background:#0856a2;transform:translateY(-1px);}
 
 /* ── FOOTER ── */
 footer{background:var(--ink);color:rgba(255,255,255,.3);text-align:center;padding:26px;font-size:clamp(10.5px,1.4vw,12px);letter-spacing:.5px;position:relative;overflow:hidden;}
@@ -321,11 +326,15 @@ footer span{color:var(--mint);}
   .hero-l{padding-top:clamp(52px,9vh,80px);}
   .hero-r{padding:28px clamp(20px,5vw,40px) 52px;}
   .about-grid,.contact-grid{grid-template-columns:1fr;}
+  .contact-grid .rvr{order:-1;}
   .proj-card{grid-template-columns:1fr;gap:16px;}
   .hero-cards{max-width:100%;}
   .nav{overflow-x:auto;scrollbar-width:none;gap:10px;}
   .nav::-webkit-scrollbar{display:none;}
   .nl{padding:8px 12px;}
+  .orb,.proj-orb,.proj-icon,.fw,.bdot{animation:none!important;}
+  .rv,.rvl,.rvr{opacity:1;transform:none;transition:none;}
+  .btn-p:hover,.btn-o:hover,.profile-card:hover,.info-card:hover,.pill:hover,.ti:hover,.edu-card:hover,.proj-card:hover,.open-work-card:hover,.ci:hover,.ptag:hover{transform:none;}
 }
 @media(max-width:560px){
   .nav{padding:0 12px;gap:8px;height:56px;}
@@ -336,6 +345,10 @@ footer span{color:var(--mint);}
   .hero-cta .btn-p,.hero-cta .btn-o{width:100%;}
   .profile-img{width:104px;height:104px;}
   .pbtn{padding:13px 16px;}
+  .open-work-card{padding:16px;}
+  .ow-head{gap:10px;}
+  .ow-avatar{width:46px;height:46px;}
+  .ow-link{width:100%;}
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important;}
@@ -567,16 +580,17 @@ footer span{color:var(--mint);}
     <div class="rvr">
       <div class="open-work-card">
         <div class="ow-head">
-          <span class="ow-dot"></span>
-          <h3 class="ow-title">OPEN TO WORK</h3>
+          <div class="ow-profile">
+            <img class="ow-avatar" alt="B. Sai Teja profile photo">
+            <div>
+              <h3 class="ow-title">B. Sai Teja</h3>
+              <p class="ow-role">MBA Agribusiness Candidate · PJTSAU</p>
+            </div>
+          </div>
+          <span class="ow-status">Open to work</span>
         </div>
-        <p class="ow-sub">Actively seeking full-time opportunities from 2026 in agribusiness, agri-tech, and growth-focused roles.</p>
-        <div class="ow-pill-wrap">
-          <span class="ow-pill">Agri-Input</span><span class="ow-pill">Agri-Tech</span>
-          <span class="ow-pill">Agribusiness Development</span><span class="ow-pill">Market Research</span>
-          <span class="ow-pill">Value Chain Management</span><span class="ow-pill">Digital Marketing</span>
-          <span class="ow-pill">Business Development</span>
-        </div>
+        <p class="ow-sub">Open to full-time opportunities from 2026 in agribusiness, agri-tech, and growth-focused roles.</p>
+        <a class="ow-link" href="https://www.linkedin.com/in/saitejabaddula" target="_blank" rel="noopener noreferrer">View on LinkedIn</a>
       </div>
     </div>
   </div>
@@ -652,6 +666,11 @@ navMap.forEach(([id]) => {
   const section = document.getElementById(id);
   if (section) secObserver.observe(section);
 });
+
+// REUSE PROFILE PHOTO IN OPEN-TO-WORK CARD
+const heroAvatar = document.querySelector('.profile-img');
+const openWorkAvatar = document.querySelector('.ow-avatar');
+if (heroAvatar && openWorkAvatar) openWorkAvatar.src = heroAvatar.src;
 </script>
 </body>
 </html>
