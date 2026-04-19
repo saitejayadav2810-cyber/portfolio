@@ -261,7 +261,6 @@ body{font-family:'Lato',sans-serif;background:var(--parchment);color:var(--ink);
   transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s;transform-style:preserve-3d;
 }
 .stat-card:hover{transform:translateY(-6px) rotateX(5deg);box-shadow:0 20px 40px rgba(0,0,0,.22);}
-.stat-card-link{display:block;text-decoration:none;color:inherit;}
 .stat-num{font-family:'Playfair Display',serif;font-size:clamp(22px,3vw,30px);font-weight:700;color:#fff;line-height:1;margin-bottom:5px;}
 .stat-label{font-size:clamp(10px,1.3vw,11.5px);color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1px;}
 .count-num{font-variant-numeric:tabular-nums;}
@@ -506,7 +505,7 @@ footer span{color:var(--mint);}
         </div>
       </div>
       <div class="stat-grid">
-        <a href="#" class="stat-card stat-card-link"><div class="stat-label">Intern at</div><div class="stat-num">NUTRIHUB, IIMR</div><div class="stat-label">Currently</div></a>
+        <div class="stat-card"><div class="stat-label">Intern at</div><div class="stat-num">NUTRIHUB, IIMR</div><div class="stat-label">Currently</div></div>
         <div class="stat-card"><div class="stat-num">2026</div><div class="stat-label">MBA Grad by</div></div>
         <div class="stat-card"><div class="stat-num count-num" data-target="8.24" data-start="8.00" data-decimal="2">8.00</div><div class="stat-label">BSc CGPA</div></div>
         <div class="stat-card"><div class="stat-num count-num" data-target="3" data-suffix="+">0</div><div class="stat-label">Internships</div></div>
