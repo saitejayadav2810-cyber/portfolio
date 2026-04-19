@@ -12,7 +12,7 @@
   --parchment:#F8F4EF;--ink:#0F1A0F;--slate:#4A5568;--mist:#718096;
   --bone:#EDE8DF;--amber:#D4A017;--warm:#F0EBE1;--white:#FFFFFF;
 }
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth;scroll-padding-top:62px;}
 body{font-family:'Lato',sans-serif;background:var(--parchment);color:var(--ink);overflow-x:hidden;}
 
 /* ── LOADER ── */
@@ -39,19 +39,22 @@ body{font-family:'Lato',sans-serif;background:var(--parchment);color:var(--ink);
   position:sticky;top:0;z-index:100;
   background:rgba(248,244,239,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   border-bottom:1px solid rgba(0,0,0,.06);
-  padding:0 clamp(16px,5vw,60px);display:flex;align-items:center;gap:clamp(14px,3vw,36px);height:56px;
-  transition:box-shadow .35s;
+  padding:0 clamp(16px,5vw,60px);display:flex;align-items:center;gap:clamp(10px,2vw,18px);height:62px;
+  transition:box-shadow .35s,background .3s;
 }
 .nav.on{box-shadow:0 4px 28px rgba(27,67,50,.09);}
 .nav-logo{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(19px,3.5vw,23px);color:var(--forest);margin-right:auto;letter-spacing:.04em;}
 .nl{
-  font-size:clamp(11.5px,1.8vw,13px);color:var(--slate);letter-spacing:.04em;font-weight:400;
+  font-size:clamp(12px,1.8vw,13.5px);color:var(--slate);letter-spacing:.03em;font-weight:700;
   text-decoration:none;background:none;border:none;font-family:'Lato',sans-serif;
-  cursor:pointer;padding:4px 0;position:relative;transition:color .2s;white-space:nowrap;flex-shrink:0;
+  cursor:pointer;padding:9px 14px;position:relative;transition:color .2s,background .26s,transform .26s,box-shadow .26s,border-color .26s;white-space:nowrap;flex-shrink:0;
+  border-radius:999px;border:1px solid rgba(45,106,79,.12);background:rgba(255,255,255,.5);
 }
 .nl::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1.5px;background:var(--mint);transform:scaleX(0);transition:transform .26s cubic-bezier(.22,1,.36,1);transform-origin:right;}
-.nl:hover{color:var(--forest);}
-.nl:hover::after{transform:scaleX(1);transform-origin:left;}
+.nl:hover{color:var(--forest);transform:translateY(-1px);box-shadow:0 8px 20px rgba(27,67,50,.12);background:#fff;border-color:rgba(45,106,79,.32);}
+.nl:hover::after{transform:scaleX(.85);transform-origin:left;}
+.nl.active{color:#fff;background:var(--forest);border-color:var(--forest);box-shadow:0 10px 24px rgba(27,67,50,.28);}
+.nl.active::after{transform:scaleX(0);}
 
 /* ── HERO ── */
 .hero{min-height:100svh;background:var(--forest);position:relative;overflow:hidden;}
@@ -67,14 +70,19 @@ body{font-family:'Lato',sans-serif;background:var(--parchment);color:var(--ink);
 .hero-l{padding:clamp(44px,7vh,90px) clamp(22px,5vw,60px);display:flex;flex-direction:column;justify-content:center;}
 .hero-badge{
   display:inline-flex;align-items:center;gap:8px;
-  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);
-  color:rgba(255,255,255,.75);font-size:clamp(10px,1.5vw,12px);letter-spacing:2.5px;
+  background:rgba(255,255,255,.12);border:1px solid rgba(82,183,136,.48);
+  color:rgba(255,255,255,.9);font-size:clamp(10.5px,1.6vw,12.5px);letter-spacing:2.5px;
   text-transform:uppercase;padding:8px 18px;border-radius:50px;
   margin-bottom:clamp(18px,3vh,32px);width:fit-content;
-  animation:fadeUp .8s 2.1s both;
+  box-shadow:0 0 0 1px rgba(82,183,136,.24),0 0 26px rgba(82,183,136,.3);
+  animation:fadeUp .8s 2.1s both,badgeGlow 2.8s ease-in-out 2.9s infinite;
 }
-.bdot{width:6px;height:6px;background:var(--mint);border-radius:50%;animation:blink 2s ease-in-out infinite;flex-shrink:0;}
+.bdot{width:7px;height:7px;background:var(--mint);border-radius:50%;animation:blink 1.8s ease-in-out infinite;flex-shrink:0;box-shadow:0 0 14px rgba(82,183,136,.9);}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.1}}
+@keyframes badgeGlow{
+  0%,100%{box-shadow:0 0 0 1px rgba(82,183,136,.24),0 0 20px rgba(82,183,136,.28)}
+  50%{box-shadow:0 0 0 1px rgba(82,183,136,.34),0 0 34px rgba(82,183,136,.5)}
+}
 
 .hero-name{
   font-family:'Playfair Display',serif;
@@ -100,16 +108,16 @@ body{font-family:'Lato',sans-serif;background:var(--parchment);color:var(--ink);
 /* Buttons */
 .btn-p{
   background:var(--mint);color:var(--forest);border:none;
-  padding:clamp(13px,2vh,16px) clamp(24px,3vw,34px);
-  font-family:'Lato',sans-serif;font-size:clamp(13.5px,1.8vw,15px);font-weight:700;
+  padding:clamp(15px,2.2vh,18px) clamp(26px,3.2vw,38px);
+  font-family:'Lato',sans-serif;font-size:clamp(14px,1.9vw,15.8px);font-weight:700;
   border-radius:5px;cursor:pointer;letter-spacing:.06em;text-transform:uppercase;
   transition:transform .32s cubic-bezier(.22,1,.36,1),box-shadow .32s,background .2s;
 }
 .btn-p:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(82,183,136,.35);background:#60c995;}
 .btn-o{
   background:transparent;color:rgba(255,255,255,.85);border:1.5px solid rgba(255,255,255,.28);
-  padding:clamp(13px,2vh,16px) clamp(24px,3vw,34px);
-  font-family:'Lato',sans-serif;font-size:clamp(13.5px,1.8vw,15px);font-weight:400;
+  padding:clamp(15px,2.2vh,18px) clamp(26px,3.2vw,38px);
+  font-family:'Lato',sans-serif;font-size:clamp(14px,1.9vw,15.8px);font-weight:600;
   border-radius:5px;cursor:pointer;letter-spacing:.06em;
   transition:all .3s;
 }
@@ -132,7 +140,7 @@ body{font-family:'Lato',sans-serif;background:var(--parchment);color:var(--ink);
 }
 .profile-card:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.25);}
 .profile-img{
-  width:96px;height:96px;border-radius:50%;object-fit:cover;object-position:center top;
+  width:112px;height:112px;border-radius:50%;object-fit:cover;object-position:center top;
   border:2.5px solid var(--mint);display:block;margin:0 auto 12px;
   box-shadow:0 8px 28px rgba(0,0,0,.3);
   transition:transform .4s cubic-bezier(.22,1,.36,1);
@@ -145,8 +153,8 @@ body{font-family:'Lato',sans-serif;background:var(--parchment);color:var(--ink);
 .profile-btns{display:flex;flex-direction:column;gap:9px;}
 .pbtn{
   display:flex;align-items:center;justify-content:center;gap:8px;
-  padding:12px 16px;border-radius:8px;font-family:'Lato',sans-serif;
-  font-size:clamp(12.5px,1.7vw,13.5px);font-weight:700;letter-spacing:.04em;
+  padding:14px 18px;border-radius:10px;font-family:'Lato',sans-serif;
+  font-size:clamp(13px,1.8vw,14.5px);font-weight:700;letter-spacing:.04em;
   text-decoration:none;cursor:pointer;border:none;
   transition:transform .28s cubic-bezier(.22,1,.36,1),box-shadow .28s,opacity .2s;
 }
@@ -279,13 +287,27 @@ section{padding:clamp(52px,7vh,90px) clamp(20px,6vw,64px);}
 .ci:hover{transform:translateX(6px);color:var(--forest);}
 .cicon{width:clamp(38px,4vw,46px);height:clamp(38px,4vw,46px);background:var(--pale);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:clamp(15px,2vw,18px);flex-shrink:0;transition:transform .28s,background .28s;}
 .ci:hover .cicon{transform:rotate(8deg) scale(1.1);background:var(--mint);}
-.open-card{background:var(--forest);color:#fff;border-radius:16px;padding:clamp(26px,3.5vw,40px);transition:transform .42s cubic-bezier(.22,1,.36,1),box-shadow .42s;}
-.open-card:hover{transform:translateY(-5px);box-shadow:0 22px 50px rgba(27,67,50,.28);}
-.open-card h3{font-family:'Playfair Display',serif;font-size:clamp(22px,2.9vw,29px);margin-bottom:11px;}
-.open-card p{font-size:clamp(14px,1.8vw,15.5px);color:rgba(255,255,255,.68);line-height:1.82;margin-bottom:18px;font-weight:400;}
-.dpills{display:flex;flex-wrap:wrap;gap:7px;}
-.dp{background:rgba(255,255,255,.1);color:#fff;font-size:clamp(11.5px,1.5vw,13px);padding:7px 15px;border-radius:20px;border:1px solid rgba(255,255,255,.2);font-weight:700;transition:background .2s,transform .22s;cursor:default;}
-.dp:hover{background:rgba(255,255,255,.2);transform:translateY(-2px);}
+.open-work-card{
+  background:#fff;color:var(--ink);border-radius:16px;padding:clamp(24px,3.3vw,36px);
+  border:1px solid rgba(27,67,50,.12);
+  transition:transform .42s cubic-bezier(.22,1,.36,1),box-shadow .42s,border-color .3s;
+  box-shadow:0 18px 42px rgba(27,67,50,.1);
+}
+.open-work-card:hover{transform:translateY(-6px);box-shadow:0 24px 54px rgba(27,67,50,.16);border-color:rgba(82,183,136,.45);}
+.ow-head{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.ow-dot{
+  width:14px;height:14px;border-radius:50%;background:#0a7f49;
+  box-shadow:0 0 0 4px rgba(10,127,73,.13),0 0 16px rgba(10,127,73,.45);
+  animation:owPulse 2.2s ease-in-out infinite;
+}
+.ow-title{font-family:'Playfair Display',serif;font-size:clamp(22px,2.9vw,30px);line-height:1.05;}
+.ow-sub{font-size:clamp(14px,1.8vw,15.5px);color:var(--slate);line-height:1.8;margin-bottom:16px;font-weight:400;}
+.ow-pill-wrap{display:flex;flex-wrap:wrap;gap:8px;}
+.ow-pill{
+  background:#E7F7ED;color:#0a7f49;font-size:clamp(11.5px,1.5vw,13px);
+  padding:7px 14px;border-radius:18px;border:1px solid rgba(10,127,73,.2);font-weight:700;
+}
+@keyframes owPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.13)}}
 
 /* ── FOOTER ── */
 footer{background:var(--ink);color:rgba(255,255,255,.3);text-align:center;padding:26px;font-size:clamp(10.5px,1.4vw,12px);letter-spacing:.5px;position:relative;overflow:hidden;}
@@ -301,14 +323,22 @@ footer span{color:var(--mint);}
   .about-grid,.contact-grid{grid-template-columns:1fr;}
   .proj-card{grid-template-columns:1fr;gap:16px;}
   .hero-cards{max-width:100%;}
-  .nav{overflow-x:auto;scrollbar-width:none;}
+  .nav{overflow-x:auto;scrollbar-width:none;gap:10px;}
   .nav::-webkit-scrollbar{display:none;}
+  .nl{padding:8px 12px;}
 }
 @media(max-width:560px){
-  .nav{padding:0 14px;gap:14px;height:52px;}
+  .nav{padding:0 12px;gap:8px;height:56px;}
   .edu-grid{grid-template-columns:1fr;}
   .ti{margin-bottom:28px;padding-bottom:28px;}
   .hero-name{white-space:normal;font-size:clamp(42px,10vw,64px);}
+  .hero-cta{gap:10px;}
+  .hero-cta .btn-p,.hero-cta .btn-o{width:100%;}
+  .profile-img{width:104px;height:104px;}
+  .pbtn{padding:13px 16px;}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important;}
 }
 </style>
 </head>
@@ -535,14 +565,17 @@ footer span{color:var(--mint);}
       </div>
     </div>
     <div class="rvr">
-      <div class="open-card">
-        <h3>Open to Roles In</h3>
-        <p>Seeking opportunities at the intersection of agricultural science and business strategy — from upstream agri-input to downstream market development and digital outreach.</p>
-        <div class="dpills">
-          <span class="dp">Agri-Input</span><span class="dp">Agri-Tech</span>
-          <span class="dp">Agribusiness Development</span><span class="dp">Market Research</span>
-          <span class="dp">Value Chain Management</span><span class="dp">Digital Marketing</span>
-          <span class="dp">Business Development</span>
+      <div class="open-work-card">
+        <div class="ow-head">
+          <span class="ow-dot"></span>
+          <h3 class="ow-title">OPEN TO WORK</h3>
+        </div>
+        <p class="ow-sub">Actively seeking full-time opportunities from 2026 in agribusiness, agri-tech, and growth-focused roles.</p>
+        <div class="ow-pill-wrap">
+          <span class="ow-pill">Agri-Input</span><span class="ow-pill">Agri-Tech</span>
+          <span class="ow-pill">Agribusiness Development</span><span class="ow-pill">Market Research</span>
+          <span class="ow-pill">Value Chain Management</span><span class="ow-pill">Digital Marketing</span>
+          <span class="ow-pill">Business Development</span>
         </div>
       </div>
     </div>
@@ -585,6 +618,40 @@ const tlio = new IntersectionObserver(entries => {
 }, { threshold: 0.08 });
 const tl = document.getElementById('tl');
 if (tl) tlio.observe(tl);
+
+// ACTIVE NAV SECTION
+const navBtns = Array.from(document.querySelectorAll('.nl'));
+const navMap = [
+  ['about', 0],
+  ['exp', 1],
+  ['edu', 2],
+  ['proj', 3],
+  ['contact', 4]
+];
+const setActiveNav = idx => navBtns.forEach((b, i) => b.classList.toggle('active', i === idx));
+const setInitialActiveNav = () => {
+  const pivot = window.innerHeight * 0.35;
+  let best = { idx: 0, dist: Infinity };
+  navMap.forEach(([id, idx]) => {
+    const section = document.getElementById(id);
+    if (!section) return;
+    const dist = Math.abs(section.getBoundingClientRect().top - pivot);
+    if (dist < best.dist) best = { idx, dist };
+  });
+  setActiveNav(best.idx);
+};
+if (navBtns.length) setInitialActiveNav();
+const secObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const match = navMap.find(([id]) => id === entry.target.id);
+    if (match) setActiveNav(match[1]);
+  });
+}, { threshold: 0.45 });
+navMap.forEach(([id]) => {
+  const section = document.getElementById(id);
+  if (section) secObserver.observe(section);
+});
 </script>
 </body>
 </html>
