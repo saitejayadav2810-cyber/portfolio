@@ -170,9 +170,9 @@ body{font-family:'Lato',sans-serif;background:var(--parchment);color:var(--ink);
 /* BUTTONS with fill-slide effect */
 .btn-p{
   background:var(--mint);color:var(--forest);border:none;
-  padding:clamp(15px,2.2vh,18px) clamp(26px,3.2vw,38px);
-  font-family:'Lato',sans-serif;font-size:clamp(14px,1.9vw,15.8px);font-weight:700;
-  border-radius:5px;cursor:none;letter-spacing:.06em;text-transform:uppercase;
+  padding:clamp(12px,1.9vh,15px) clamp(22px,2.8vw,32px);
+  font-family:'Lato',sans-serif;font-size:clamp(13px,1.6vw,14.5px);font-weight:700;
+  border-radius:8px;cursor:none;letter-spacing:.02em;
   position:relative;overflow:hidden;transition:transform .32s cubic-bezier(.22,1,.36,1),box-shadow .32s;
   display:inline-block;
 }
@@ -181,13 +181,13 @@ body{font-family:'Lato',sans-serif;background:var(--parchment);color:var(--ink);
 .btn-p span{position:relative;z-index:1;}
 .btn-p:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(82,183,136,.4);}
 .btn-o{
-  background:transparent;color:rgba(255,255,255,.85);border:1.5px solid rgba(255,255,255,.28);
-  padding:clamp(15px,2.2vh,18px) clamp(26px,3.2vw,38px);
-  font-family:'Lato',sans-serif;font-size:clamp(14px,1.9vw,15.8px);font-weight:600;
-  border-radius:5px;cursor:none;letter-spacing:.06em;
+  background:rgba(255,255,255,.04);color:rgba(255,255,255,.88);border:1.5px solid rgba(82,183,136,.38);
+  padding:clamp(12px,1.9vh,15px) clamp(22px,2.8vw,32px);
+  font-family:'Lato',sans-serif;font-size:clamp(13px,1.6vw,14.5px);font-weight:600;
+  border-radius:8px;cursor:none;letter-spacing:.02em;
   transition:all .3s cubic-bezier(.22,1,.36,1);display:inline-block;
 }
-.btn-o:hover{border-color:rgba(255,255,255,.65);background:rgba(255,255,255,.1);transform:translateY(-4px);}
+.btn-o:hover{border-color:rgba(82,183,136,.65);background:rgba(82,183,136,.12);transform:translateY(-4px);}
 .magnetic{display:inline-block;}
 @media(max-width:700px){.btn-p,.btn-o{cursor:pointer;}}
 
@@ -255,13 +255,14 @@ body{font-family:'Lato',sans-serif;background:var(--parchment);color:var(--ink);
 .card-accent{color:var(--mint);font-weight:700;}
 
 /* stat cards (hero right) */
-.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .stat-card{
-  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.13);border-radius:14px;padding:18px;text-align:center;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.13);border-radius:12px;padding:14px;text-align:center;
   transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s;transform-style:preserve-3d;
 }
 .stat-card:hover{transform:translateY(-6px) rotateX(5deg);box-shadow:0 20px 40px rgba(0,0,0,.22);}
-.stat-num{font-family:'Playfair Display',serif;font-size:clamp(22px,3vw,30px);font-weight:700;color:#fff;line-height:1;margin-bottom:5px;}
+.stat-num{font-family:'Playfair Display',serif;font-size:clamp(19px,2.5vw,24px);font-weight:700;color:#fff;line-height:1.1;margin-bottom:5px;}
+.stat-num.org-stat{font-size:clamp(14px,1.8vw,17px);letter-spacing:.03em;}
 .stat-label{font-size:clamp(10px,1.3vw,11.5px);color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1px;}
 .count-num{font-variant-numeric:tabular-nums;}
 
@@ -505,8 +506,8 @@ footer span{color:var(--mint);}
         </div>
       </div>
       <div class="stat-grid">
-        <div class="stat-card"><div class="stat-label">Intern at</div><div class="stat-num">NUTRIHUB, IIMR</div><div class="stat-label">Currently</div></div>
-        <div class="stat-card"><div class="stat-num">2026</div><div class="stat-label">MBA Graduation</div></div>
+        <div class="stat-card"><div class="stat-label">Intern at</div><div class="stat-num org-stat">NUTRIHUB, IIMR</div><div class="stat-label">Currently</div></div>
+        <div class="stat-card"><div class="stat-num">By 2026</div><div class="stat-label">MBA Graduation</div></div>
         <div class="stat-card"><div class="stat-num count-num" data-target="8.24" data-start="8.00" data-decimal="2">8.00</div><div class="stat-label">BSc CGPA</div></div>
         <div class="stat-card"><div class="stat-num count-num" data-target="3" data-suffix="+">0</div><div class="stat-label">Internships</div></div>
       </div>
