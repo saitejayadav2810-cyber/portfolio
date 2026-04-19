@@ -326,8 +326,6 @@ footer span{color:var(--mint);}
   .hero-l{padding-top:clamp(52px,9vh,80px);}
   .hero-r{padding:28px clamp(20px,5vw,40px) 52px;}
   .about-grid,.contact-grid{grid-template-columns:1fr;}
-  /* Move availability card above contact details on mobile for immediate visibility */
-  .contact-grid .rvr{order:-1;}
   .proj-card{grid-template-columns:1fr;gap:16px;}
   .hero-cards{max-width:100%;}
   .nav{overflow-x:auto;scrollbar-width:none;gap:10px;}
@@ -567,17 +565,6 @@ footer span{color:var(--mint);}
 <section id="contact">
   <div class="s-label rv">Let's Connect</div>
   <div class="contact-grid">
-    <div class="rvl">
-      <h2 class="contact-h">Available for the<br><em>right opportunity.</em></h2>
-      <p class="contact-sub">Actively seeking full-time roles in agri-input, agri-tech, or agribusiness development. MBA graduating 2026 from PJTSAU, Hyderabad.</p>
-      <div class="clinks">
-        <div class="ci"><div class="cicon">📧</div><a href="mailto:saiteja1097@proton.me" style="color:inherit;text-decoration:none;">saiteja1097@proton.me</a></div>
-        <div class="ci"><div class="cicon">📱</div><span>+91 83675 29281</span></div>
-        <div class="ci"><div class="cicon">🔗</div><a href="https://www.linkedin.com/in/saitejabaddula" style="color:inherit;text-decoration:none;">linkedin.com/in/saitejabaddula</a></div>
-        <div class="ci"><div class="cicon">📍</div><span>Hyderabad, Telangana</span></div>
-        <div class="ci"><div class="cicon">🏠</div><span>Achampet, Nagar Kurnool, Telangana</span></div>
-      </div>
-    </div>
     <div class="rvr">
       <div class="open-work-card">
         <div class="ow-head">
@@ -592,6 +579,17 @@ footer span{color:var(--mint);}
         </div>
         <p class="ow-sub">Open to full-time opportunities from 2026 in agribusiness, agri-tech, and growth-focused roles.</p>
         <a class="ow-link" href="https://www.linkedin.com/in/saitejabaddula" target="_blank" rel="noopener noreferrer">View on LinkedIn</a>
+      </div>
+    </div>
+    <div class="rvl">
+      <h2 class="contact-h">Available for the<br><em>right opportunity.</em></h2>
+      <p class="contact-sub">Actively seeking full-time roles in agri-input, agri-tech, or agribusiness development. MBA graduating 2026 from PJTSAU, Hyderabad.</p>
+      <div class="clinks">
+        <div class="ci"><div class="cicon">📧</div><a href="mailto:saiteja1097@proton.me" style="color:inherit;text-decoration:none;">saiteja1097@proton.me</a></div>
+        <div class="ci"><div class="cicon">📱</div><span>+91 83675 29281</span></div>
+        <div class="ci"><div class="cicon">🔗</div><a href="https://www.linkedin.com/in/saitejabaddula" style="color:inherit;text-decoration:none;">linkedin.com/in/saitejabaddula</a></div>
+        <div class="ci"><div class="cicon">📍</div><span>Hyderabad, Telangana</span></div>
+        <div class="ci"><div class="cicon">🏠</div><span>Achampet, Nagar Kurnool, Telangana</span></div>
       </div>
     </div>
   </div>
@@ -673,7 +671,7 @@ const heroAvatar = document.querySelector('.profile-img');
 const openWorkAvatar = document.querySelector('.ow-avatar');
 if (heroAvatar && openWorkAvatar) {
   const fallbackAvatarSrc = openWorkAvatar.src;
-  heroAvatar.addEventListener('error', () => {
+  openWorkAvatar.addEventListener('error', () => {
     openWorkAvatar.src = fallbackAvatarSrc;
   }, { once: true });
   if (heroAvatar.complete && heroAvatar.naturalWidth > 0) {
