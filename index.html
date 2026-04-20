@@ -281,7 +281,8 @@ section{padding:clamp(52px,7vh,90px) clamp(20px,6vw,64px);position:relative;z-in
 .d5{transition-delay:.48s!important}
 
 /* ── ABOUT ── */
-.about-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(28px,5vw,60px);align-items:start;}
+.about-grid{display:grid;grid-template-columns:1.1fr 1fr 0.75fr;gap:clamp(20px,4vw,48px);align-items:start;}
+@media(max-width:900px){.about-grid{grid-template-columns:1fr 1fr;}.about-tl{display:none;}}
 .about-text p{font-size:clamp(15.5px,2.1vw,17px);color:var(--slate);line-height:1.92;margin-bottom:18px;}
 .about-text strong{color:var(--ink);font-weight:700;}
 .sk-head{font-size:clamp(10px,1.4vw,11.5px);text-transform:uppercase;letter-spacing:2.5px;color:var(--mist);margin-bottom:11px;font-weight:700;}
@@ -505,48 +506,7 @@ footer span{color:var(--mint);}
           <a href="https://t.me/Agrimets_bot/agrimets" target="_blank" class="pbtn pbtn-cv"><span class="pbtn-icon">🌾</span> AGRIMETS Platform</a>
         </div>
       </div>
-      <div style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);border-radius:14px;padding:18px 16px;backdrop-filter:blur(12px);">
-        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:14px;font-weight:700;">Career Journey</div>
-        <div style="position:relative;padding-left:24px;">
-          <div style="position:absolute;left:5px;top:6px;bottom:6px;width:1.5px;background:rgba(255,255,255,.15);"></div>
-          <!-- Node 1 -->
-          <div style="position:relative;margin-bottom:14px;">
-            <div style="position:absolute;left:-20px;top:4px;width:11px;height:11px;border-radius:50%;background:#1D9E75;border:2px solid #1D9E75;"></div>
-            <div style="font-size:9px;color:#52B788;letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:2px;">2020 – 2024</div>
-            <div style="font-size:12px;font-weight:700;color:#fff;line-height:1.2;">B.Sc Agriculture</div>
-            <div style="font-size:10px;color:rgba(255,255,255,.45);">Agri. College, Aswaraopet · PJTAU</div>
-          </div>
-          <!-- Node 2 -->
-          <div style="position:relative;margin-bottom:14px;">
-            <div style="position:absolute;left:-20px;top:4px;width:11px;height:11px;border-radius:50%;background:#1D9E75;border:2px solid #1D9E75;"></div>
-            <div style="font-size:9px;color:#52B788;letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:2px;">2024 – Present</div>
-            <div style="font-size:12px;font-weight:700;color:#fff;line-height:1.2;">MBA Agribusiness</div>
-            <div style="font-size:10px;color:rgba(255,255,255,.45);">SABM, PJTAU · Hyderabad</div>
-          </div>
-          <!-- Node 3 -->
-          <div style="position:relative;margin-bottom:14px;">
-            <div style="position:absolute;left:-20px;top:4px;width:11px;height:11px;border-radius:50%;background:#1D9E75;border:2px solid #1D9E75;"></div>
-            <div style="font-size:9px;color:#52B788;letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:2px;">Oct – Nov 2025</div>
-            <div style="font-size:12px;font-weight:700;color:#fff;line-height:1.2;">Digital Marketing Intern</div>
-            <div style="font-size:10px;color:rgba(255,255,255,.45);">Butter Tree Foods Pvt. Ltd.</div>
-          </div>
-          <!-- Node 4 (active) -->
-          <div style="position:relative;margin-bottom:14px;">
-            <div style="position:absolute;left:-21px;top:3px;width:13px;height:13px;border-radius:50%;background:#378ADD;border:2px solid #378ADD;box-shadow:0 0 0 4px rgba(55,138,221,.25);animation:tlpulse 2s ease-in-out infinite;"></div>
-            <div style="font-size:9px;color:#52B788;letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:2px;">Now → June 2025</div>
-            <div style="font-size:12px;font-weight:700;color:#fff;line-height:1.2;">Intern · NutriHub, IIMR</div>
-            <div style="font-size:10px;color:rgba(255,255,255,.45);">Ongoing</div>
-          </div>
-          <!-- Node 5 (future) -->
-          <div style="position:relative;">
-            <div style="position:absolute;left:-20px;top:4px;width:11px;height:11px;border-radius:50%;background:transparent;border:2px solid #EF9F27;"></div>
-            <div style="font-size:9px;color:#EF9F27;letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:2px;">2026</div>
-            <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,.6);line-height:1.2;">MBA Graduation</div>
-            <div style="font-size:10px;color:rgba(255,255,255,.35);">SABM, PJTAU</div>
-          </div>
-        </div>
-      </div>
-      <style>@keyframes tlpulse{0%,100%{box-shadow:0 0 0 0 rgba(55,138,221,.4)}50%{box-shadow:0 0 0 6px rgba(55,138,221,0)}}</style>
+
     </div>
   </div>
 </section>
@@ -593,6 +553,43 @@ footer span{color:var(--mint);}
       <div class="pills">
         <span class="pill">English — Fluent</span><span class="pill">Telugu — Native</span><span class="pill">Hindi — Conversational</span>
       </div>
+    </div>
+    <div class="rvr d3 about-tl">
+      <p class="sk-head">Career Journey</p>
+      <div style="position:relative;padding-left:22px;margin-top:4px;">
+        <div style="position:absolute;left:4px;top:6px;bottom:6px;width:1.5px;background:var(--bone);"></div>
+        <div style="position:relative;margin-bottom:18px;">
+          <div style="position:absolute;left:-19px;top:4px;width:11px;height:11px;border-radius:50%;background:var(--forest);border:2px solid #fff;box-shadow:0 0 0 2px var(--pale);"></div>
+          <div style="font-size:10px;color:var(--mint);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:2px;">2020 – 2024</div>
+          <div style="font-size:13px;font-weight:700;color:var(--ink);line-height:1.3;">B.Sc Agriculture</div>
+          <div style="font-size:11.5px;color:var(--mist);">Agri. College, Aswaraopet · PJTAU</div>
+        </div>
+        <div style="position:relative;margin-bottom:18px;">
+          <div style="position:absolute;left:-19px;top:4px;width:11px;height:11px;border-radius:50%;background:var(--forest);border:2px solid #fff;box-shadow:0 0 0 2px var(--pale);"></div>
+          <div style="font-size:10px;color:var(--mint);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:2px;">2024 – Present</div>
+          <div style="font-size:13px;font-weight:700;color:var(--ink);line-height:1.3;">MBA Agribusiness</div>
+          <div style="font-size:11.5px;color:var(--mist);">SABM, PJTAU · Hyderabad</div>
+        </div>
+        <div style="position:relative;margin-bottom:18px;">
+          <div style="position:absolute;left:-19px;top:4px;width:11px;height:11px;border-radius:50%;background:var(--forest);border:2px solid #fff;box-shadow:0 0 0 2px var(--pale);"></div>
+          <div style="font-size:10px;color:var(--mint);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:2px;">Oct – Nov 2025</div>
+          <div style="font-size:13px;font-weight:700;color:var(--ink);line-height:1.3;">Digital Marketing Intern</div>
+          <div style="font-size:11.5px;color:var(--mist);">Butter Tree Foods Pvt. Ltd.</div>
+        </div>
+        <div style="position:relative;margin-bottom:18px;">
+          <div style="position:absolute;left:-20px;top:3px;width:13px;height:13px;border-radius:50%;background:#378ADD;border:2px solid #fff;box-shadow:0 0 0 3px rgba(55,138,221,.25);animation:tlpulse 2s ease-in-out infinite;"></div>
+          <div style="font-size:10px;color:var(--mint);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:2px;">Now → June 2025</div>
+          <div style="font-size:13px;font-weight:700;color:var(--ink);line-height:1.3;">Intern · NutriHub, IIMR</div>
+          <div style="font-size:11.5px;color:var(--mist);">Ongoing</div>
+        </div>
+        <div style="position:relative;">
+          <div style="position:absolute;left:-19px;top:4px;width:11px;height:11px;border-radius:50%;background:transparent;border:2px solid var(--amber);"></div>
+          <div style="font-size:10px;color:var(--amber);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:2px;">2026</div>
+          <div style="font-size:13px;font-weight:700;color:var(--slate);line-height:1.3;">MBA Graduation</div>
+          <div style="font-size:11.5px;color:var(--mist);">SABM, PJTAU</div>
+        </div>
+      </div>
+      <style>@keyframes tlpulse{0%,100%{box-shadow:0 0 0 0 rgba(55,138,221,.4)}50%{box-shadow:0 0 0 6px rgba(55,138,221,0)}}</style>
     </div>
   </div>
 </section>
